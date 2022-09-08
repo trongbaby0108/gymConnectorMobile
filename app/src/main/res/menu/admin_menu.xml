@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_newCombo"
+        android:icon="@drawable/icon_cate"
+        android:title="Thêm gói tập" />
+
+    <item
+        android:id="@+id/nav_newGym"
+        android:icon="@drawable/icon_room"
+        android:title="Thêm Gym" />
+
+    <item
+        android:id="@+id/nav_User"
+        android:icon="@drawable/icon_trainer"
+        android:title="Danh sách user User" />
+
+    <item
+        android:id="@+id/Combo"
+        android:icon="@drawable/icon_cate"
+        android:title="Danh sách gói tập" />
+
+    <item
+        android:id="@+id/nav_gym"
+        android:icon="@drawable/icon_room"
+        android:title="Danh sách phòng Gym" />
+
+    <item
+        android:id="@+id/nav_trainers"
+        android:icon="@drawable/icon_trainer"
+        android:title="Danh sách Huấn luyện viên" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout_icon"
+        android:title="Đăng xuất"
+        />
+</menu>

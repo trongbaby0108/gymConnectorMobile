@@ -1,0 +1,63 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_round"
+        android:layout_margin="15dp"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/img_Avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon_gym3"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+            app:layout_constraintEnd_toEndOf="@+id/imageView8"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Tên"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginLeft="26dp"
+            app:layout_constraintStart_toEndOf="@+id/img_Avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông tin khác"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginLeft="26dp"
+            app:layout_constraintStart_toEndOf="@+id/img_Avatar"
+            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+        <Switch
+            android:id="@+id/Enable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:switchMinWidth="56dp"
+            android:text="Vô hiệu hóa:"
+            android:textOff="OFF"
+            android:textOn="ON"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/img_Avatar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

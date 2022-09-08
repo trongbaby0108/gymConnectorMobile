@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_trainer_info"
+        android:icon="@drawable/icon_trainer"
+        android:title="Thông tin huấn luyện viên" />
+
+
+    <item
+        android:id="@+id/nav_Chat"
+        android:icon="@drawable/icon_trainer"
+        android:title="Chat"/>
+    <item
+        android:id="@+id/nav_Users"
+        android:icon="@drawable/icon_username"
+        android:title="Thông tin User" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout_icon"
+        android:title="Đăng xuất"
+        />
+</menu>

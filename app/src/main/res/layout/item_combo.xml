@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemCombo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp"
+    android:layout_margin="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:weightSum="5"
+        android:elevation="15dp">
+
+        <TextView
+            android:id="@+id/comboPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comboName"
+            android:layout_marginStart="32dp"
+            android:layout_toRightOf="@id/img_combo"
+            android:paddingTop="5dp"
+            android:text="Price here"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/img_combo"
+            app:layout_constraintTop_toBottomOf="@+id/comboName" />
+
+        <TextView
+            android:id="@+id/comboWhere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comboName"
+            android:layout_marginStart="32dp"
+            android:layout_toRightOf="@id/img_combo"
+            android:paddingTop="5dp"
+            android:text="Where's combo"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/img_combo"
+            app:layout_constraintTop_toBottomOf="@+id/comboPrice" />
+
+        <TextView
+            android:id="@+id/comboGymName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comboName"
+            android:layout_marginStart="32dp"
+            android:layout_toRightOf="@id/img_combo"
+            android:paddingTop="10dp"
+            android:text="Describe here"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/img_combo"
+            app:layout_constraintTop_toBottomOf="@+id/comboWhere" />
+
+        <ImageView
+            android:id="@+id/img_combo"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gym"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.055"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.493" />
+
+        <TextView
+            android:id="@+id/comboName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@+id/img_combo"
+            android:fontFamily="@font/baloo"
+            android:text="Name here"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/img_combo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

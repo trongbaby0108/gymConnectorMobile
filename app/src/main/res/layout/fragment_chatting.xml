@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.FragmentChatting"
+    android:background="#EDE5E5">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Toolbar
+        android:id="@+id/toolbar_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3843D3"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:titleMarginStart="20dp"
+        android:titleTextColor="#ffffff"
+        android:subtitleTextColor="#ffffff">
+
+    </Toolbar>
+
+</LinearLayout>
