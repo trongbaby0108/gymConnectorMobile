@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.PTAdapter;
-import com.example.dashboardmodern.Fragment.Admin.FragmentGymDetailAdmin;
 import com.example.dashboardmodern.Fragment.Admin.FragmentPTDetailAdmin;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Trainer;

@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,11 +11,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Gym;
 import com.example.lib.Model.combo;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHolder> {
@@ -45,7 +42,7 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
         combo combo = combos.get(position);
         Picasso.get().load(combo.getGym().getAvatar()).into(holder.image);
         holder.title.setText(combo.getName());
-        holder.price.setText(String.valueOf(combo.getPrice())+ " VNĐ");
+        holder.price.setText(combo.getPrice() + " VNĐ");
         holder.gym.setText("Gym: "+combo.getGym().getName());
         holder.comboItem.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,15 +26,9 @@ import com.example.dashboardmodern.Fragment.Client.FragmentUserByPt;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserInfo;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.billGymResponse;
 import com.example.lib.Model.userInfoResponse;
-import com.example.lib.Repository.Methods;
-import com.example.lib.RetrofitClient;
 import com.google.android.material.navigation.NavigationView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import vn.momo.momo_partner.AppMoMoLib;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

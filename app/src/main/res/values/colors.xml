@@ -8,8 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#CCCCFF</color>
-    <color name="colorPrimaryDark"></color>
-    <color name="colorAccent"></color>
     <color name="darker_grey">#9A9797</color>
     <color name="darker_blue">#22005D</color>
     <color name="Tex">#404547</color>

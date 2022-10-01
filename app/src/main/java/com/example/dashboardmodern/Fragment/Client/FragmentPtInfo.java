@@ -19,14 +19,10 @@ import android.widget.TextView;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.combo;
 import com.example.lib.Model.userImg;
-import com.example.lib.Model.userInfoResponse;
 import com.example.lib.Repository.Methods;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

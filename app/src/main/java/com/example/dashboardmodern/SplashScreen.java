@@ -14,7 +14,7 @@ import com.example.dashboardmodern.Activity.LoginActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN = 5000;
+    private static final int SPLASH_SCREEN = 5000;
 
     Animation topAnim,bottomAnim;
     ImageView imageView;

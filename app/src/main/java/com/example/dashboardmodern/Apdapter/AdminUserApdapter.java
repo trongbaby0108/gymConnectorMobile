@@ -11,9 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.combo;
 import com.example.lib.Model.userInfoResponse;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +21,7 @@ import java.util.List;
 public class AdminUserApdapter extends RecyclerView.Adapter<AdminUserApdapter.AdminUserViewHolder>  {
 
     private final List<userInfoResponse> userInfoResponses;
-    private OnNoteListener mlistener;
+    private final OnNoteListener mlistener;
 
     public AdminUserApdapter(List<userInfoResponse> userInfoResponses, OnNoteListener mlistener) {
         this.userInfoResponses = userInfoResponses;
@@ -45,8 +43,7 @@ public class AdminUserApdapter extends RecyclerView.Adapter<AdminUserApdapter.Ad
 
         holder.txtInfo.setText("Email: " + user.getEmail());
         holder.txtName.setText("Tên: "+ user.getName());
-        if(user.isEnable()) holder.Enable.setChecked(true);
-        else holder.Enable.setChecked(false);
+        holder.Enable.setChecked(user.isEnable());
         holder.Enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

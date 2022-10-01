@@ -39,7 +39,7 @@ public class TrainerImgAdapter extends RecyclerView.Adapter<TrainerImgAdapter.Tr
         if(trainer==null){
             return;
         }
-        Picasso.get().load(trainer.getAvatar()).into(holder.imgUser);;
+        Picasso.get().load(trainer.getAvatar()).into(holder.imgUser);
         holder.tvName.setText(trainer.getName());
     }
 

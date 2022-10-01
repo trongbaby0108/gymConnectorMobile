@@ -39,7 +39,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import vn.momo.momo_partner.AppMoMoLib;
 
 public class FragmentGymDetail extends Fragment {
 

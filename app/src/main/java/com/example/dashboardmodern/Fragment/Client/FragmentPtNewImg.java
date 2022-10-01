@@ -3,7 +3,6 @@ package com.example.dashboardmodern.Fragment.Client;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
 import com.example.dashboardmodern.R;

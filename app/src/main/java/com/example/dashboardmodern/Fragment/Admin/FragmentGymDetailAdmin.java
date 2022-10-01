@@ -1,17 +1,17 @@
 package com.example.dashboardmodern.Fragment.Admin;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.dashboardmodern.Activity.MainActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.example.dashboardmodern.R;
+import com.example.dashboardmodern.Activity.MainActivity;
+
 import com.example.lib.Model.Gym;
 import com.example.lib.Repository.Methods;
 import com.example.lib.RetrofitClient;

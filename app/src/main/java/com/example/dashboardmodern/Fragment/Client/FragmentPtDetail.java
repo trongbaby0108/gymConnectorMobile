@@ -3,7 +3,6 @@ package com.example.dashboardmodern.Fragment.Client;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,7 +30,6 @@ import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Comment;
 import com.example.lib.Model.Trainer;
-import com.example.lib.Model.billGymResponse;
 import com.example.lib.Model.billPTResponse;
 import com.example.lib.Model.userImg;
 import com.example.lib.Repository.Methods;
@@ -65,13 +63,13 @@ public class FragmentPtDetail extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String amount = "100000";
-    private String fee = "0";
+    private final String amount = "100000";
+    private final String fee = "0";
     int environment = 0;//developer default
-    private String merchantName = "trong";
-    private String merchantCode = "MOMOWOWK20220503";
-    private String merchantNameLabel = "Nhà cung cấp";
-    private String description = "Thanh toán dịch vụ Gym";
+    private final String merchantName = "trong";
+    private final String merchantCode = "MOMOWOWK20220503";
+    private final String merchantNameLabel = "Nhà cung cấp";
+    private final String description = "Thanh toán dịch vụ Gym";
 
 
     Trainer trainer ;

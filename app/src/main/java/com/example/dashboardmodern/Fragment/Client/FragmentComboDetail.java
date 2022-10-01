@@ -1,6 +1,5 @@
 package com.example.dashboardmodern.Fragment.Client;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
-import com.example.dashboardmodern.Activity.UserLoginActivity;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.billGymResponse;
 import com.example.lib.Model.combo;
@@ -27,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,13 +47,13 @@ public class FragmentComboDetail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String amount = "100000";
-    private String fee = "0";
+    private final String amount = "100000";
+    private final String fee = "0";
     int environment = 0;//developer default
-    private String merchantName = "trong";
-    private String merchantCode = "MOMOWOWK20220503";
-    private String merchantNameLabel = "Nhà cung cấp";
-    private String description = "Thanh toán dịch vụ Gym";
+    private final String merchantName = "trong";
+    private final String merchantCode = "MOMOWOWK20220503";
+    private final String merchantNameLabel = "Nhà cung cấp";
+    private final String description = "Thanh toán dịch vụ Gym";
 
 
     public combo combo;
@@ -103,7 +100,7 @@ public class FragmentComboDetail extends Fragment {
         Picasso.get().load(combo.getGym().getAvatar()).into(gymImg);
         comboName.setText("Tên Combo: "+combo.getName());
         comboDesc.setText("Địa chỉ: "+combo.getGym().getAddress());
-        comboPrice.setText("Giá: "+String.valueOf(combo.getPrice()));
+        comboPrice.setText("Giá: "+ combo.getPrice());
 
         book.setOnClickListener(new View.OnClickListener() {
             @Override
