@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.combo;
+import com.example.lib.Model.Request.combo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -32,8 +32,7 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
     @Override
     public ComboAdapter.ComboViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(resouces,parent,false);
-        ComboAdapter.ComboViewHolder ComboViewHolder = new ComboAdapter.ComboViewHolder(view);
-        return ComboViewHolder;
+        return new ComboViewHolder(view);
     }
 
     @Override
@@ -65,7 +64,6 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
 
         public ComboViewHolder(@NonNull View itemView) {
             super(itemView);
-
             image = itemView.findViewById(R.id.img_combo);
             title = itemView.findViewById(R.id.comboName);
             price = itemView.findViewById(R.id.comboPrice);

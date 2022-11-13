@@ -1,4 +1,4 @@
-package com.example.dashboardmodern;
+package com.example.dashboardmodern.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

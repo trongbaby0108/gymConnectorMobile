@@ -16,8 +16,9 @@ import com.example.dashboardmodern.Apdapter.GymApdapter;
 
 import com.example.dashboardmodern.Fragment.Admin.FragmentGymDetailAdmin;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Gym;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -82,7 +83,7 @@ public class FragmentGym extends Fragment {
         //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(0, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
         Call<List<Gym>> callGym = methods.getGym();
         callGym.enqueue(new Callback<List<Gym>>() {
             @Override

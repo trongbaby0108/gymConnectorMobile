@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dashboardmodern.R;
-import com.example.dashboardmodern.RealPathUtil;
-import com.example.lib.Repository.Methods;
+import com.example.dashboardmodern.Utils.RealPathUtil;
+import com.example.lib.Model.Request.ptSignIn;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import java.io.File;
@@ -95,12 +97,12 @@ public class PTSignUpActivity extends AppCompatActivity {
                           int price,
                           int gymID
     ) {
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Client methods = RetrofitClient.getRetrofit().create(Client.class);
         String strRealPath = RealPathUtil.getRealPath(this,imageUri);
         File file = new File(strRealPath);
         RequestBody rqAvt =  RequestBody.create(MediaType.parse("multipart/form-data"),file);
         MultipartBody.Part mutipartBodyAvt = MultipartBody.Part.createFormData("pic" , file.getName(),rqAvt);
-        Call<String> signUpUser = methods.signUpPT(username,pass,name,email,address,phone,price,gymID);
+        Call<String> signUpUser = methods.signUpPT(new ptSignIn(username,pass,name,email,address,phone,price,gymID));
         signUpUser.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

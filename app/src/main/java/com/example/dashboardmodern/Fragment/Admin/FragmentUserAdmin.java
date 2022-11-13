@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.AdminUserApdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.userInfoResponse;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Response.userInfoResponse;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -77,7 +77,7 @@ public class FragmentUserAdmin extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_user_admin, container, false);
         RecyclerView listUser = view.findViewById(R.id.listUser);
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
         MainActivity mainActivity = (MainActivity) getActivity();
         Call<List<userInfoResponse>> getUserAdmin = methods.getUserAdmin("Bearer "+mainActivity.jwt);
         getUserAdmin.enqueue(new Callback<List<userInfoResponse>>() {

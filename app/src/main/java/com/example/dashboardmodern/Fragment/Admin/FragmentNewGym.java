@@ -23,8 +23,8 @@ import android.widget.TextView;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Fragment.Client.FragmentHome;
 import com.example.dashboardmodern.R;
-import com.example.dashboardmodern.RealPathUtil;
-import com.example.lib.Repository.Methods;
+import com.example.dashboardmodern.Utils.RealPathUtil;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -119,7 +119,7 @@ public class FragmentNewGym extends Fragment {
                          String phone,
                          String address){
 
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
 
         Call<String> addGym = methods.addGym("Bearer "+ mainActivity.jwt, email, address, name, phone);
 

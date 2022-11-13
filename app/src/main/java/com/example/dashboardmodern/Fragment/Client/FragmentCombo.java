@@ -15,8 +15,10 @@ import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.ComboAdapter;
 import com.example.dashboardmodern.Fragment.Admin.FragmentComboDetailAdmin;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.combo;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.combo;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -75,7 +77,7 @@ public class FragmentCombo extends Fragment {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rcv_combo.setLayoutManager(staggeredGridLayoutManager);
         //Get data via Api
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
         Call<List<combo>> callCombo = methods.getCombo();
         callCombo.enqueue(new Callback<List<combo>>() {
             @Override

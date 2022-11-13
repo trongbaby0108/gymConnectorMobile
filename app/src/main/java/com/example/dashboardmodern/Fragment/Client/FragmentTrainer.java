@@ -14,8 +14,9 @@ import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.PTAdapter;
 import com.example.dashboardmodern.Fragment.Admin.FragmentPTDetailAdmin;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Trainer;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -77,9 +78,10 @@ public class FragmentTrainer extends Fragment {
         LinearLayoutManager LinearLayout = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         rcvTrainer.setLayoutManager(LinearLayout);
         MainActivity mainActivity = (MainActivity) getActivity();
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin admin = RetrofitClient.getRetrofit().create(Admin.class);
+        Home home = RetrofitClient.getRetrofit().create(Home.class);
         if(!mainActivity.acc.getRole().equals("ADMIN")) {
-            Call<List<Trainer>> callPT = methods.getPT();
+            Call<List<Trainer>> callPT = home.getPT();
             callPT.enqueue(new Callback<List<Trainer>>() {
                 @Override
                 public void onResponse(Call<List<Trainer>> call, Response<List<Trainer>> response) {
@@ -108,7 +110,7 @@ public class FragmentTrainer extends Fragment {
             });
         }
         else{
-            Call<List<Trainer>> callPT = methods.getALlPTAdmin("Bearer "+ mainActivity.jwt);
+            Call<List<Trainer>> callPT = admin.getALlPTAdmin("Bearer "+ mainActivity.jwt);
             callPT.enqueue(new Callback<List<Trainer>>() {
                 @Override
                 public void onResponse(Call<List<Trainer>> call, Response<List<Trainer>> response) {

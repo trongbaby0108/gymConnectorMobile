@@ -20,10 +20,11 @@ import com.example.dashboardmodern.Fragment.Admin.FragmentComboDetailAdmin;
 import com.example.dashboardmodern.Fragment.Admin.FragmentGymDetailAdmin;
 import com.example.dashboardmodern.Fragment.Admin.FragmentPTDetailAdmin;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Gym;
-import com.example.lib.Model.Trainer;
-import com.example.lib.Model.combo;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Request.combo;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -116,7 +117,7 @@ public class FragmentHome extends Fragment {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         Rcv_Gym.setLayoutManager(staggeredGridLayoutManager);
         //Get data via Api
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
         Call<List<Gym>> callGym = methods.getGym();
         callGym.enqueue(new Callback<List<Gym>>() {
             @Override
@@ -153,7 +154,7 @@ public class FragmentHome extends Fragment {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         Rcv_Pt.setLayoutManager(staggeredGridLayoutManager);
         //Get data via Api
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
         Call<List<Trainer>> callPT = methods.getPT();
         callPT.enqueue(new Callback<List<Trainer>>() {
             @Override
@@ -189,7 +190,7 @@ public class FragmentHome extends Fragment {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         Rcv_Combo.setLayoutManager(staggeredGridLayoutManager);
         //Get data via Api
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
         Call<List<combo>> callCombo = methods.getCombo();
         callCombo.enqueue(new Callback<List<combo>>() {
             @Override

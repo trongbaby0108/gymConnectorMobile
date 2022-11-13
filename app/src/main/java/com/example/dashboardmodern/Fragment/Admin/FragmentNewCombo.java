@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Gym;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -75,8 +77,9 @@ public class FragmentNewCombo extends Fragment {
         txtName = view.findViewById(R.id.name);
         txtPrice = view.findViewById(R.id.price);
 
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
-        Call<List<Gym>> callGym = methods.getGym();
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+        Home home = RetrofitClient.getRetrofit().create(Home.class);
+        Call<List<Gym>> callGym = home.getGym();
         callGym.enqueue(new Callback<List<Gym>>() {
             @Override
             public void onResponse(Call<List<Gym>> call, Response<List<Gym>> response) {

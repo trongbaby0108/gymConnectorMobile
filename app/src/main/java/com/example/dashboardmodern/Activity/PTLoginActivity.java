@@ -11,9 +11,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.loginRequest;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Request.loginRequest;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import retrofit2.Call;
@@ -42,7 +43,7 @@ public class PTLoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Client methods = RetrofitClient.getRetrofit().create(Client.class);
                 loginRequest loginRequest = new loginRequest(username.getText().toString(),pass.getText().toString());
                 Call<String> login = methods.login(loginRequest);
                 login.enqueue(new Callback<String>() {

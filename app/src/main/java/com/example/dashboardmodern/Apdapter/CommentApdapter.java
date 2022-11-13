@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Comment;
+import com.example.lib.Model.Request.Comment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

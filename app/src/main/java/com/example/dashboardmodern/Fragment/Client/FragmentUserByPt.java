@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.dashboardmodern.Apdapter.UserPTAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.userInfoResponse;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Response.userInfoResponse;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class FragmentUserByPt extends Fragment {
         rcv_Users.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         rcv_Users.setLayoutManager(linearLayoutManager);
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
         Call<List<userInfoResponse>> getUserByPT =  methods.getUserByPT(pt.getId());
         getUserByPT.enqueue(new Callback<List<userInfoResponse>>() {
             @Override

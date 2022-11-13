@@ -1,4 +1,4 @@
-package com.example.dashboardmodern;
+package com.example.dashboardmodern.Utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.LoginActivity;
+import com.example.dashboardmodern.R;
 
 public class SplashScreen extends AppCompatActivity {
 

@@ -1,6 +1,6 @@
-package com.example.lib.Model;
+package com.example.lib.Model.Response;
 
-import java.time.LocalDateTime;
+import com.example.lib.Model.Request.Gym;
 
 import lombok.Data;
 
@@ -10,5 +10,5 @@ public class billGymResponse {
     private String dayStart ;
     private String dayEnd ;
     private Gym gym;
-    private combo combo;
+    private com.example.lib.Model.Request.combo combo;
 }

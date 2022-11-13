@@ -16,8 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.dashboardmodern.R;
-import com.example.dashboardmodern.RealPathUtil;
-import com.example.lib.Repository.Methods;
+import com.example.dashboardmodern.Utils.RealPathUtil;
+import com.example.lib.Model.Request.userSignIn;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import java.io.File;
@@ -126,12 +128,12 @@ public class UserSignUpActivity extends AppCompatActivity {
                           String phone,
                           String address
     ) {
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Client methods = RetrofitClient.getRetrofit().create(Client.class);
         String strRealPath = RealPathUtil.getRealPath(this,imageUri);
         File file = new File(strRealPath);
         RequestBody rqAvt =  RequestBody.create(MediaType.parse("multipart/form-data"),file);
         MultipartBody.Part mutipartBodyAvt = MultipartBody.Part.createFormData("avatar" , file.getName(),rqAvt);
-        Call<String> signUpUser = methods.signUpUser(username,pass,name,email,address,phone);
+        Call<String> signUpUser = methods.signUpUser(new userSignIn(username,pass,name,email,address,phone));
         signUpUser.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -153,9 +155,7 @@ public class UserSignUpActivity extends AppCompatActivity {
                 bundle.putString("username",username);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 

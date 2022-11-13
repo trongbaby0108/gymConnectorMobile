@@ -19,10 +19,11 @@ import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Comment;
-import com.example.lib.Model.Trainer;
-import com.example.lib.Model.userImg;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Comment;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Request.userImg;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -89,11 +90,11 @@ public class FragmentPTDetailAdmin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         MainActivity mainActivity = (MainActivity) getActivity();
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin admin = RetrofitClient.getRetrofit().create(Admin.class);
+        Home home = RetrofitClient.getRetrofit().create(Home.class);
         View view = inflater.inflate(R.layout.fragment_p_t_detail_admin, container, false);
         RecyclerView comment_feedback_pt = view.findViewById(R.id.comment_feedback_pt);
-
-        Call<List<Comment>> getComment = methods.getJudgeByPT(position.getId());
+        Call<List<Comment>> getComment = home.getJudgeByPT(position.getId());
         getComment.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
@@ -116,7 +117,7 @@ public class FragmentPTDetailAdmin extends Fragment {
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
 
-        Call<List<userImg>> getImg = methods.getByPt(position.getId());
+        Call<List<userImg>> getImg = home.getByPt(position.getId());
         getImg.enqueue(new Callback<List<userImg>>() {
             @Override
             public void onResponse(Call<List<userImg>> call, Response<List<userImg>> response) {
@@ -141,7 +142,7 @@ public class FragmentPTDetailAdmin extends Fragment {
         btn_disable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<String> disable = methods.disablePT(mainActivity.jwt,position.getId());
+                Call<String> disable = admin.disablePT(mainActivity.jwt,position.getId());
                 disable.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -159,7 +160,7 @@ public class FragmentPTDetailAdmin extends Fragment {
         btn_enable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<String> enable = methods.enablePT(mainActivity.jwt,position.getId());
+                Call<String> enable = admin.enablePT(mainActivity.jwt,position.getId());
                 enable.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

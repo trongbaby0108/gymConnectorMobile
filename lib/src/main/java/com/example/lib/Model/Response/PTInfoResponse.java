@@ -1,11 +1,11 @@
-package com.example.lib.Model;
+package com.example.lib.Model.Response;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class userInfoResponse implements Serializable {
+public class PTInfoResponse implements Serializable {
     private int id ;
     private String username ;
     private String name ;
@@ -13,6 +13,6 @@ public class userInfoResponse implements Serializable {
     private String phone ;
     private String email ;
     private String avatar;
-    private String role;
-    private boolean enable;
+    private int fee;
+    private String role ;
 }

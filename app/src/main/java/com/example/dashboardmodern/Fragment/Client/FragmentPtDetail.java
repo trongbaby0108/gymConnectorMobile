@@ -28,11 +28,13 @@ import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Comment;
-import com.example.lib.Model.Trainer;
-import com.example.lib.Model.billPTResponse;
-import com.example.lib.Model.userImg;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Comment;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Response.billPTResponse;
+import com.example.lib.Model.Request.userImg;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -72,10 +74,14 @@ public class FragmentPtDetail extends Fragment {
     private final String description = "Thanh toán dịch vụ Gym";
 
 
+    Client client;
+    Home home;
+
     Trainer trainer ;
 
     public FragmentPtDetail() {
-        // Required empty public constructor
+        client = RetrofitClient.getRetrofit().create(Client.class);
+        home = RetrofitClient.getRetrofit().create(Home.class);
     }
 
     public FragmentPtDetail(Trainer trainer) {
@@ -127,7 +133,7 @@ public class FragmentPtDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
 
                 Call<billPTResponse> checkPTExit = methods.checkPTExit(mainActivity.acc.getId());
                 checkPTExit.enqueue(new Callback<billPTResponse>() {
@@ -170,8 +176,7 @@ public class FragmentPtDetail extends Fragment {
         });
 
         RecyclerView comment_feedback_pt = view.findViewById(R.id.comment_feedback_pt);
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
-        Call<List<Comment>> getComment = methods.getJudgeByPT(trainer.getId());
+        Call<List<Comment>> getComment = home.getJudgeByPT(trainer.getId());
         getComment.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
@@ -202,7 +207,7 @@ public class FragmentPtDetail extends Fragment {
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
 
-        Call<List<userImg>> getImg = methods.getByPt(trainer.getId());
+        Call<List<userImg>> getImg = home.getByPt(trainer.getId());
         getImg.enqueue(new Callback<List<userImg>>() {
             @Override
             public void onResponse(Call<List<userImg>> call, Response<List<userImg>> response) {
@@ -295,12 +300,12 @@ public class FragmentPtDetail extends Fragment {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
-                Call<String> addComment = methods.addCommentPT(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId());
+                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+                Call<String> addComment = client.addCommentPT(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId());
                 addComment.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Call<List<Comment>> getComment = methods.getJudgeByPT(trainer.getId());
+                        Call<List<Comment>> getComment = home.getJudgeByPT(trainer.getId());
                         getComment.enqueue(new Callback<List<Comment>>() {
                             @Override
                             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {

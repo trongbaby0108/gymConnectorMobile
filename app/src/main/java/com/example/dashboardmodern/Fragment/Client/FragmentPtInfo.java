@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.userImg;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Request.userImg;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -79,9 +81,10 @@ public class FragmentPtInfo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pt_info, container, false);
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Home methods = RetrofitClient.getRetrofit().create(Home.class);
 
         ImageView profile_image = view.findViewById(R.id.profile_image);
+        if(!ptInfoResponse.getAvatar().equals(""))
         Picasso.get().load(ptInfoResponse.getAvatar()).into(profile_image);
 
         TextView txtName = view.findViewById(R.id.txtName);
@@ -110,6 +113,8 @@ public class FragmentPtInfo extends Fragment {
             }
         });
 
+        Admin admin = RetrofitClient.getRetrofit().create(Admin.class);
+
         Button btn_update = view.findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +122,7 @@ public class FragmentPtInfo extends Fragment {
                 int cost= 0;
                 try {
                     cost = Integer.parseInt(txtCost.getText().toString());
-                    Call<PTInfoResponse> updatePT = methods.updatePT(
+                    Call<PTInfoResponse> updatePT = admin.updatePT(
                             ptInfoResponse.getId(),
                             txtName.getText().toString(),
                             txtPhone.getText().toString(),

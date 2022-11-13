@@ -25,8 +25,8 @@ import com.example.dashboardmodern.Fragment.Client.FragmentTrainer;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserByPt;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserInfo;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Model.userInfoResponse;
+import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Response.userInfoResponse;
 import com.google.android.material.navigation.NavigationView;
 
 import vn.momo.momo_partner.AppMoMoLib;
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public DrawerLayout drawerLayout;
     public NavigationView navigationView;
     public Toolbar toolbar;
-    public userInfoResponse acc ;
+    public userInfoResponse acc;
     public PTInfoResponse pt;
     public String jwt;
     boolean isGoogle;
-    Fragment fragment ;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

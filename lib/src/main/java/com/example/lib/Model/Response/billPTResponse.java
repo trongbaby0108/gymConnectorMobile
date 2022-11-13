@@ -1,6 +1,6 @@
-package com.example.lib.Model;
+package com.example.lib.Model.Response;
 
-import java.time.LocalDateTime;
+import com.example.lib.Model.Request.Trainer;
 
 import lombok.Data;
 

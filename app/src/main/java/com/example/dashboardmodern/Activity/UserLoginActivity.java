@@ -10,9 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.loginRequest;
-import com.example.lib.Model.userInfoResponse;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.loginRequest;
+import com.example.lib.Model.Response.userInfoResponse;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -39,7 +40,7 @@ public class UserLoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Client methods = RetrofitClient.getRetrofit().create(Client.class);
                 loginRequest loginRequest = new loginRequest(txtUsername.getText().toString(),txtPass.getText().toString());
                 Call<String> login = methods.login(loginRequest);
                 login.enqueue(new Callback<String>() {
@@ -88,14 +89,13 @@ public class UserLoginActivity extends AppCompatActivity {
 
                 signIn();
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UserLoginActivity.this);
-
-
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Client methods = RetrofitClient.getRetrofit().create(Client.class);
                 Call<userInfoResponse> loginGoogle;
-//                if(acct.getPhotoUrl() == null)
-//                    loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),"");
-//                else
-//                    loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),acct.getPhotoUrl().toString());
+                assert acct != null;
+                if(acct.getPhotoUrl() == null)
+                    loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),"");
+                else
+                    loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),acct.getPhotoUrl().toString());
                 loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),"");
                 loginGoogle.enqueue(new Callback<userInfoResponse>() {
                     @Override

@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.userImg;
+import com.example.lib.Model.Request.userImg;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

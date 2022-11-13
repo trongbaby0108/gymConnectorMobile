@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.combo;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.combo;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 
 import retrofit2.Call;
@@ -72,7 +72,7 @@ public class FragmentComboDetailAdmin extends Fragment {
         txtName.setText(combo.getName());
         txtPrice = view.findViewById(R.id.price);
         txtPrice.setText(String.valueOf(combo.getPrice()));
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
         MainActivity mainActivity = (MainActivity) getActivity();
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Trainer;
+import com.example.lib.Model.Request.Trainer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lib.Model.Trainer;
+import com.example.lib.Model.Request.Trainer;
 import com.example.dashboardmodern.R;
 import com.squareup.picasso.Picasso;
 

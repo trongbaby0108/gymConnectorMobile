@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.billGymResponse;
-import com.example.lib.Model.billPTResponse;
-import com.example.lib.Model.userInfoResponse;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Response.billGymResponse;
+import com.example.lib.Model.Response.billPTResponse;
+import com.example.lib.Model.Response.userInfoResponse;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
@@ -77,7 +77,7 @@ public class FragmentUserInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
 
         view = inflater.inflate(R.layout.fragment_user, container, false);
         if(user != null){

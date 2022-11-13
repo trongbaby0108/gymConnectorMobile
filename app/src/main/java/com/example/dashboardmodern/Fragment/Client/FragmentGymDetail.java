@@ -26,11 +26,13 @@ import com.example.dashboardmodern.Apdapter.ComboAdapter;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.PTAdapter;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Comment;
-import com.example.lib.Model.Gym;
-import com.example.lib.Model.Trainer;
-import com.example.lib.Model.combo;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Comment;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Request.combo;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
+import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -51,8 +53,8 @@ public class FragmentGymDetail extends Fragment {
 
     Gym gym ;
 
-
-
+    Client client;
+    Home home;
     TextView name, address, phone ;
     ImageView img;
     RecyclerView rcvCombo,rcv_pt,rcv_Comment;
@@ -60,7 +62,8 @@ public class FragmentGymDetail extends Fragment {
     Button btn_open_dialog_center;
 
     public FragmentGymDetail() {
-        // Required empty public constructor
+        client = RetrofitClient.getRetrofit().create(Client.class);
+        home = RetrofitClient.getRetrofit().create(Home.class);
     }
 
     public FragmentGymDetail(Gym gym) {
@@ -111,8 +114,7 @@ public class FragmentGymDetail extends Fragment {
         rcvCombo = view.findViewById(R.id.rcv_combo);
         rcv_pt = view.findViewById(R.id.rcv_pt);
 
-        Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
-        Call<List<combo>> getCombo = methods.getComboByGym(gym.getId());
+        Call<List<combo>> getCombo = home.getComboByGym(gym.getId());
         getCombo.enqueue(new Callback<List<combo>>() {
             @Override
             public void onResponse(Call<List<combo>> call, Response<List<combo>> response) {
@@ -137,7 +139,7 @@ public class FragmentGymDetail extends Fragment {
             }
         });
 
-        Call<List<Trainer>> getPT = methods.getPTByGym(gym.getId());
+        Call<List<Trainer>> getPT = home.getPTByGym(gym.getId());
         getPT.enqueue(new Callback<List<Trainer>>() {
             @Override
             public void onResponse(Call<List<Trainer>> call, Response<List<Trainer>> response) {
@@ -167,7 +169,7 @@ public class FragmentGymDetail extends Fragment {
             }
         });
 
-        Call<List<Comment>> getComment = methods.getJudgeByGym(gym.getId());
+        Call<List<Comment>> getComment = home.getJudgeByGym(gym.getId());
         getComment.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
@@ -212,12 +214,11 @@ public class FragmentGymDetail extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
-                Call<String> addComment = methods.addComment(comment.getText().toString(),ratingBar.getRating(),gym.getId(),mainActivity.acc.getId());
+                Call<String> addComment = client.addComment(comment.getText().toString(),ratingBar.getRating(),gym.getId(),mainActivity.acc.getId());
                 addComment.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Call<List<Comment>> getComment = methods.getJudgeByGym(gym.getId());
+                        Call<List<Comment>> getComment = home.getJudgeByGym(gym.getId());
                         getComment.enqueue(new Callback<List<Comment>>() {
                             @Override
                             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {

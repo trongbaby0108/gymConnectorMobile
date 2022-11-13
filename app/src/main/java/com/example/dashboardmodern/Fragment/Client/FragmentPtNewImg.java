@@ -20,9 +20,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.dashboardmodern.R;
-import com.example.dashboardmodern.RealPathUtil;
-import com.example.lib.Model.PTInfoResponse;
-import com.example.lib.Repository.Methods;
+import com.example.dashboardmodern.Utils.RealPathUtil;
+import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 
 import java.io.File;
@@ -99,7 +99,7 @@ public class FragmentPtNewImg extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
                 String strRealPath = RealPathUtil.getRealPath(getContext(),imageUri);
                 File file = new File(strRealPath);
                 RequestBody rqAvt =  RequestBody.create(MediaType.parse("multipart/form-data"),file);

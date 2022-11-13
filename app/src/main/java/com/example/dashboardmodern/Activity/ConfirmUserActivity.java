@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import retrofit2.Call;
@@ -29,7 +30,7 @@ public class ConfirmUserActivity extends AppCompatActivity {
         username = bundle.getString("username");
         if (bundle != null) {
 
-            Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+            Client methods = RetrofitClient.getRetrofit().create(Client.class);
             Call<String> call = methods.sendTokenUser(username);
             call.enqueue(new Callback<String>() {
                 @Override

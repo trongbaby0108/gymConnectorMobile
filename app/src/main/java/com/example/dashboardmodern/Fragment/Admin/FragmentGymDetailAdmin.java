@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dashboardmodern.R;
 import com.example.dashboardmodern.Activity.MainActivity;
 
-import com.example.lib.Model.Gym;
-import com.example.lib.Repository.Methods;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -77,7 +77,7 @@ public class FragmentGymDetailAdmin extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Methods methods = RetrofitClient.getRetrofit().create(Methods.class);
+                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 Call<String> update = methods.updateGym("Bearer " + mainActivity.jwt,gym.getId(),email.getText().toString(),address.getText().toString(),name.getText().toString(),phone.getText().toString());
                 update.enqueue(new Callback<String>() {
