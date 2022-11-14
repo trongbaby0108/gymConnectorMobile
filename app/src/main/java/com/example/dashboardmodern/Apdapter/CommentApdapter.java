@@ -28,14 +28,13 @@ public class CommentApdapter extends RecyclerView.Adapter<CommentApdapter.Commen
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item,parent,false);
-        CommentApdapter.CommentViewHolder CommentViewHolder = new  CommentApdapter.CommentViewHolder(view);
-        return CommentViewHolder;
+        return new  CommentViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
-        if(!comment.getAvatar().equals(""))
+        if(comment.getAvatar() != null)
             Picasso.get().load(comment.getAvatar()).into(holder.image);
         holder.name.setText(comment.getName());
         holder.comment.setText(comment.getContent());
@@ -44,7 +43,9 @@ public class CommentApdapter extends RecyclerView.Adapter<CommentApdapter.Commen
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        if(comments == null)
+            return 0;
+        else return comments.size();
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder{

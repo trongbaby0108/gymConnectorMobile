@@ -19,9 +19,8 @@ import android.widget.TextView;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.PTInfoResponse;
-import com.example.lib.Model.Request.userImg;
+import com.example.lib.Model.Response.ptImgResponse;
 import com.example.lib.Repository.Admin;
-import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
@@ -167,17 +166,17 @@ public class FragmentPtInfo extends Fragment {
         });
 
         RecyclerView rcv_img = view.findViewById(R.id.rcv_img);
-        Call<List<userImg>> getImg = methods.getByPt(ptInfoResponse.getId());
-        getImg.enqueue(new Callback<List<userImg>>() {
+        Call<List<ptImgResponse>> getImg = methods.getByPt(ptInfoResponse.getId());
+        getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
-            public void onResponse(Call<List<userImg>> call, Response<List<userImg>> response) {
+            public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 rcv_img.setLayoutManager(gridLayoutManager);
                 rcv_img.setAdapter(new UserImgAdapter(response.body()));
             }
 
             @Override
-            public void onFailure(Call<List<userImg>> call, Throwable t) {
+            public void onFailure(Call<List<ptImgResponse>> call, Throwable t) {
 
             }
         });

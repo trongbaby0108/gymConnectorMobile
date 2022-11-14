@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import cz.msebera.android.httpclient.HttpStatus;
+import okhttp3.HttpUrl;
+
 public class UserPTAdapter extends RecyclerView.Adapter<UserPTAdapter.UserPTViewHolder> {
 
     private final List<userInfoResponse> userInfoResponses;
@@ -39,7 +42,6 @@ public class UserPTAdapter extends RecyclerView.Adapter<UserPTAdapter.UserPTView
         holder.name.setText(user.getName());
         holder.address.setText("Địa chỉ:" + user.getAddress());
         holder.phone.setText("Số điện thoại:" + user.getPhone());
-
         holder.itemUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,5 +1,7 @@
 package com.example.lib.Repository;
 
+import com.example.lib.Model.Request.addGymComment;
+import com.example.lib.Model.Request.addPtComment;
 import com.example.lib.Model.Request.loginRequest;
 import com.example.lib.Model.Request.ptSignIn;
 import com.example.lib.Model.Request.userSignIn;
@@ -17,7 +19,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Client {
-    @GET("/signUser/save")
+    @POST("/signUser/save")
     Call<String> signUpUser(@Body userSignIn userSignIn);
 
     @Multipart
@@ -39,10 +41,8 @@ public interface Client {
                                             @Query("name")String name,
                                             @Query("avatar") String avatar);
 
-    @GET("/signInPersonalTrainer/save")
-    Call<String> signUpPT(
-            @Body ptSignIn ptSignIn
-    );
+    @POST("/signInPersonalTrainer/signIn")
+    Call<String> signUpPT(@Body ptSignIn ptSignIn);
 
     @Multipart
     @POST("/signInPersonalTrainer/uploadAvatar")
@@ -72,17 +72,11 @@ public interface Client {
     @GET("auth/getPTInfo")
     Call<PTInfoResponse> getPTInfo(@Query("jwt") String token);
 
-    @GET("client/addComment")
-    Call<String> addComment(@Query("content") String content,
-                            @Query("vote") float vote ,
-                            @Query("gymId") int gymId,
-                            @Query("userId") int userId);
+    @POST("client/comment/addPtComment")
+    Call<String> addPtComment(@Body addPtComment addCommentPt);
 
 
-    @GET("client/addCommentPT")
-    Call<String> addCommentPT(@Query("content") String content,
-                              @Query("vote") float vote ,
-                              @Query("ptID") int ptID,
-                              @Query("userId") int userId);
+    @POST("client/comment/addGymComment")
+    Call<String> addGymComment(@Body addGymComment addGymComment);
 
 }

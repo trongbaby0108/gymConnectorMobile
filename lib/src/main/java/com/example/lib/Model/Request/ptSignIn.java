@@ -7,10 +7,10 @@ import lombok.Data;
 public class ptSignIn {
     private String username;
     private String password;
-    private String fullName;
-    private String email;
+    private String name;
     private String address;
+    private String email;
     private String phone;
+    private int gymId;
     private int price;
-    private int id;
 }

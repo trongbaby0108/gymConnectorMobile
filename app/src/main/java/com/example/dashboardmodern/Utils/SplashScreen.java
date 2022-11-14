@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.LoginActivity;
+import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -42,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

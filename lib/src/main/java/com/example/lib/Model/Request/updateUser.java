@@ -5,11 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class userSignIn {
-    private String username;
-    private String password;
+public class updateUser{
+    private int id;
     private String name;
+    private String phone;
     private String email;
     private String address;
-    private String phone;
 }

@@ -9,20 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Request.userImg;
+import com.example.lib.Model.Response.ptImgResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class UserImgAdapter extends RecyclerView.Adapter<UserImgAdapter.UserImgViewHolder> {
 
-    public List<userImg> mListUser;
-    public void setData(List<userImg> list){
+    public List<ptImgResponse> mListUser;
+    public void setData(List<ptImgResponse> list){
         this.mListUser = list;
         notifyDataSetChanged();
     }
 
-    public UserImgAdapter(List<userImg> mListUser) {
+    public UserImgAdapter(List<ptImgResponse> mListUser) {
         this.mListUser = mListUser;
     }
 
@@ -35,7 +35,7 @@ public class UserImgAdapter extends RecyclerView.Adapter<UserImgAdapter.UserImgV
 
     @Override
     public void onBindViewHolder(@NonNull UserImgViewHolder holder, int position) {
-        userImg userImg  = mListUser.get(position);
+        ptImgResponse userImg  = mListUser.get(position);
         if(userImg==null){
             return;
         }

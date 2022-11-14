@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icons8_gym_60"
+            android:title="Trang chủ" />
+
+        <item
+            android:id="@+id/Combo"
+            android:icon="@drawable/icon_cate"
+            android:title="Gói tập" />
+
+        <item
+            android:id="@+id/nav_gym"
+            android:icon="@drawable/icon_room"
+            android:title="Gym" />
+
+        <item
+            android:id="@+id/nav_trainers"
+            android:icon="@drawable/icon_trainer"
+            android:title="Huấn luyện viên" />
+
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/icon_profile"
+            android:title="Đăng nhập"/>
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/icon_trainer"
+            android:title="Thoát" />
+    </group>
+
+
+
+
+
+</menu>

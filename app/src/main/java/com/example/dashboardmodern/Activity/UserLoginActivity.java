@@ -91,7 +91,6 @@ public class UserLoginActivity extends AppCompatActivity {
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UserLoginActivity.this);
                 Client methods = RetrofitClient.getRetrofit().create(Client.class);
                 Call<userInfoResponse> loginGoogle;
-                assert acct != null;
                 if(acct.getPhotoUrl() == null)
                     loginGoogle = methods.createGoogleUser(acct.getEmail(),acct.getDisplayName(),"");
                 else

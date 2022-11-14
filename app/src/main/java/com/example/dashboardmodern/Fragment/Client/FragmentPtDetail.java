@@ -1,6 +1,7 @@
 package com.example.dashboardmodern.Fragment.Client;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,14 +25,17 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.dashboardmodern.Activity.LoginActivity;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Request.Comment;
 import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Request.addGymComment;
+import com.example.lib.Model.Request.addPtComment;
 import com.example.lib.Model.Response.billPTResponse;
-import com.example.lib.Model.Request.userImg;
+import com.example.lib.Model.Response.ptImgResponse;
 import com.example.lib.Repository.Admin;
 import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
@@ -80,8 +84,7 @@ public class FragmentPtDetail extends Fragment {
     Trainer trainer ;
 
     public FragmentPtDetail() {
-        client = RetrofitClient.getRetrofit().create(Client.class);
-        home = RetrofitClient.getRetrofit().create(Home.class);
+
     }
 
     public FragmentPtDetail(Trainer trainer) {
@@ -109,6 +112,8 @@ public class FragmentPtDetail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        client = RetrofitClient.getRetrofit().create(Client.class);
+        home = RetrofitClient.getRetrofit().create(Home.class);
         AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pt_detail, container, false);
@@ -134,36 +139,40 @@ public class FragmentPtDetail extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+                if(mainActivity.acc != null){
+                    Call<billPTResponse> checkPTExit = methods.checkPTExit(mainActivity.acc.getId());
+                    checkPTExit.enqueue(new Callback<billPTResponse>() {
+                        @Override
+                        public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
+                            if(response.body().getTrainer() !=null){
+                                ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
+                            }
+                            else {
+                                Call<Boolean> checkout = methods.checkoutPT(mainActivity.acc.getId(),trainer.getId());
+                                checkout.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        ShowMessage("Book thành công");
+                                    }
 
-                Call<billPTResponse> checkPTExit = methods.checkPTExit(mainActivity.acc.getId());
-                checkPTExit.enqueue(new Callback<billPTResponse>() {
-                    @Override
-                    public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
-                        if(response.body().getTrainer() !=null){
-                            ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        ShowMessage(t.getMessage());
+                                        System.out.println(t.getMessage());
+                                    }
+                                });
+                            }
                         }
-                        else {
-                            Call<Boolean> checkout = methods.checkoutPT(mainActivity.acc.getId(),trainer.getId());
-                            checkout.enqueue(new Callback<Boolean>() {
-                                @Override
-                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                                    ShowMessage("Book thành công");
-                                }
 
-                                @Override
-                                public void onFailure(Call<Boolean> call, Throwable t) {
-                                    ShowMessage(t.getMessage());
-                                    System.out.println(t.getMessage());
-                                }
-                            });
+                        @Override
+                        public void onFailure(Call<billPTResponse> call, Throwable t) {
+                            System.out.println(t.getMessage());
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<billPTResponse> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                    }
-                });
+                    });
+                } else {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -200,24 +209,31 @@ public class FragmentPtDetail extends Fragment {
         btn_new_feedback_pt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCommandDialog();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if(mainActivity.acc != null){
+                    openCommandDialog();
+                }
+                else {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
 
-        Call<List<userImg>> getImg = home.getByPt(trainer.getId());
-        getImg.enqueue(new Callback<List<userImg>>() {
+        Call<List<ptImgResponse>> getImg = home.getByPt(trainer.getId());
+        getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
-            public void onResponse(Call<List<userImg>> call, Response<List<userImg>> response) {
+            public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 rcv_img_detail_pt.setLayoutManager(gridLayoutManager);
                 rcv_img_detail_pt.setAdapter(new UserImgAdapter(response.body()));
             }
 
             @Override
-            public void onFailure(Call<List<userImg>> call, Throwable t) {
+            public void onFailure(Call<List<ptImgResponse>> call, Throwable t) {
 
             }
         });
@@ -301,7 +317,7 @@ public class FragmentPtDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
-                Call<String> addComment = client.addCommentPT(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId());
+                Call<String> addComment = client.addPtComment(new addPtComment(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId()));
                 addComment.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

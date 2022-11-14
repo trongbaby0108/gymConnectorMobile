@@ -101,8 +101,8 @@ public class PTSignUpActivity extends AppCompatActivity {
         String strRealPath = RealPathUtil.getRealPath(this,imageUri);
         File file = new File(strRealPath);
         RequestBody rqAvt =  RequestBody.create(MediaType.parse("multipart/form-data"),file);
-        MultipartBody.Part mutipartBodyAvt = MultipartBody.Part.createFormData("pic" , file.getName(),rqAvt);
-        Call<String> signUpUser = methods.signUpPT(new ptSignIn(username,pass,name,email,address,phone,price,gymID));
+        MultipartBody.Part mutipartBodyAvt = MultipartBody.Part.createFormData("avatar" , file.getName(),rqAvt);
+        Call<String> signUpUser = methods.signUpPT(new ptSignIn(username,pass,name,address,email,phone,gymID,price));
         signUpUser.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

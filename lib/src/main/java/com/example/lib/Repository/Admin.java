@@ -1,10 +1,7 @@
 package com.example.lib.Repository;
 
 import com.example.lib.Model.Request.Trainer;
-import com.example.lib.Model.Request.loginRequest;
-import com.example.lib.Model.Request.ptSignIn;
-import com.example.lib.Model.Request.userImg;
-import com.example.lib.Model.Request.userSignIn;
+import com.example.lib.Model.Request.updateUser;
 import com.example.lib.Model.Response.PTInfoResponse;
 import com.example.lib.Model.Response.billGymResponse;
 import com.example.lib.Model.Response.billPTResponse;
@@ -62,32 +59,27 @@ public interface Admin {
             @Query("gymId") int gymId
     );
 
-    @GET("bill_gym/checkout")
+    @GET("billGym/checkout")
     Call<Boolean> checkout(@Query("idUser") int idUser,
                            @Query("idGym") int idGym,
                            @Query("idCombo") int idCombo);
 
-    @GET("bill_gym/checkGymExit")
+    @GET("billGym/checkGymExit")
     Call<billGymResponse> checkGymExit(@Query("idUser") int idUser);
 
-    @GET("bill_pt/checkout")
+    @GET("billPt/checkout")
     Call<Boolean> checkoutPT(@Query("idUser") int idUser,
                            @Query("idPt") int idPT);
 
-    @GET("bill_pt/checkPTExit")
+    @GET("billPt/checkPTExit")
     Call<billPTResponse> checkPTExit(@Query("idUser") int idUser);
 
     @GET("user/getUserByPT")
     Call<List<userInfoResponse>> getUserByPT(@Query("idPT") int idPT);
 
-    @GET("user/update")
-    Call<String> update(
-            @Query("id") int id,
-            @Query("name") String name,
-            @Query("phone") String phone,
-            @Query("email") String email,
-            @Query("address") String address
-    );
+    @POST("user/update")
+    Call<userInfoResponse> update(
+            @Body updateUser updateUser);
 
     @GET("personal_trainer/update")
     Call<PTInfoResponse> updatePT(

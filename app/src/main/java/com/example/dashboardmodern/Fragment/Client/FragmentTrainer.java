@@ -80,7 +80,7 @@ public class FragmentTrainer extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         Admin admin = RetrofitClient.getRetrofit().create(Admin.class);
         Home home = RetrofitClient.getRetrofit().create(Home.class);
-        if(!mainActivity.acc.getRole().equals("ADMIN")) {
+        if(mainActivity.acc == null || !mainActivity.acc.getRole().equals("ADMIN")) {
             Call<List<Trainer>> callPT = home.getPT();
             callPT.enqueue(new Callback<List<Trainer>>() {
                 @Override
@@ -89,11 +89,10 @@ public class FragmentTrainer extends Fragment {
                         @Override
                         public void onNoteClick(Trainer position) {
                             Fragment fragment ;
-                            if(mainActivity.acc.getRole().equals("ADMIN"))
-                                fragment = new FragmentPTDetailAdmin(position);
-                            else
+                            if(mainActivity.acc== null || !mainActivity.acc.getRole().equals("ADMIN"))
                                 fragment = new FragmentPtDetail(position);
-
+                            else
+                                fragment = new FragmentPTDetailAdmin(position);
                             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
                             fragmentTransaction.addToBackStack("Fragment home");
@@ -122,7 +121,6 @@ public class FragmentTrainer extends Fragment {
                                 fragment = new FragmentPTDetailAdmin(position);
                             else
                                 fragment = new FragmentPtDetail(position);
-
                             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
                             fragmentTransaction.addToBackStack("Fragment home");

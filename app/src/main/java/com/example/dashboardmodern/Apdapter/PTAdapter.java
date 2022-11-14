@@ -56,7 +56,10 @@ public class PTAdapter extends RecyclerView.Adapter<PTAdapter.PTViewHolder>{
 
     @Override
     public int getItemCount() {
-        return trainers.size();
+        if(trainers == null)
+            return 0 ;
+        else
+            return trainers.size();
     }
 
 

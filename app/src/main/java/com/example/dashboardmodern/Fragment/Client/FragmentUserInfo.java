@@ -12,8 +12,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
+import com.example.lib.Model.Request.updateUser;
 import com.example.lib.Model.Response.billGymResponse;
 import com.example.lib.Model.Response.billPTResponse;
 import com.example.lib.Model.Response.userInfoResponse;
@@ -84,7 +86,7 @@ public class FragmentUserInfo extends Fragment {
             TextView txtName = view.findViewById(R.id.full_name);
             txtName.setText(user.getName());
             ImageView img = view.findViewById(R.id.profile_image);
-            if(!user.getAvatar().equals(""))
+            if(user.getAvatar() != null)
                 Picasso.get().load(user.getAvatar()).into(img);
 
             TextInputEditText name = view.findViewById(R.id.txtName);
@@ -103,15 +105,17 @@ public class FragmentUserInfo extends Fragment {
             btn_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Call<String> update =methods.update(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString());
-                    update.enqueue(new Callback<String>() {
+                    Call<userInfoResponse> update =methods.update(new updateUser(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString()));
+                    update.enqueue(new Callback<userInfoResponse>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            ShowMessage("Cập nhật thành công");
+                        public void onResponse(Call<userInfoResponse> call, Response<userInfoResponse> response) {
+                            MainActivity mainActivity = (MainActivity) getActivity();
+                            mainActivity.acc = response.body();
+                            ShowMessage("cập nhật thành công");
                         }
 
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                        public void onFailure(Call<userInfoResponse> call, Throwable t) {
 
                         }
                     });
@@ -123,7 +127,7 @@ public class FragmentUserInfo extends Fragment {
             checkGymExit.enqueue(new Callback<billGymResponse>() {
                 @Override
                 public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
-                    if(response.body().getGym() !=null){
+                    if(response.body().getGym() != null){
                         ImageView imgGym = view.findViewById(R.id.imgGym);
                         Picasso.get().load(response.body().getGym().getAvatar()).into(imgGym);
                         TextView txt_gym = view.findViewById(R.id.txt_gym);
@@ -141,7 +145,7 @@ public class FragmentUserInfo extends Fragment {
             checkPTExit.enqueue(new Callback<billPTResponse>() {
                 @Override
                 public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
-                    if(response.body().getTrainer() !=null){
+                    if(response.body().getTrainer() != null){
                         ImageView imgPT = view.findViewById(R.id.imgPT);
                         Picasso.get().load(response.body().getTrainer().getAvatar()).into(imgPT);
                         TextView txt_pt = view.findViewById(R.id.txt_pt);

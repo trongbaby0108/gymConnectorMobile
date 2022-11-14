@@ -54,7 +54,10 @@ public class AdminUserApdapter extends RecyclerView.Adapter<AdminUserApdapter.Ad
 
     @Override
     public int getItemCount() {
-        return userInfoResponses.size();
+        if(userInfoResponses == null)
+            return 0;
+        else
+            return userInfoResponses.size();
     }
 
     public static class AdminUserViewHolder extends RecyclerView.ViewHolder{

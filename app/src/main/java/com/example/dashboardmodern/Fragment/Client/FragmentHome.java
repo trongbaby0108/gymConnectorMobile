@@ -23,6 +23,7 @@ import com.example.dashboardmodern.R;
 import com.example.lib.Model.Request.Gym;
 import com.example.lib.Model.Request.Trainer;
 import com.example.lib.Model.Request.combo;
+import com.example.lib.Model.Response.userInfoResponse;
 import com.example.lib.Repository.Admin;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
@@ -128,10 +129,10 @@ public class FragmentHome extends Fragment {
                     public void onNoteClick(Gym position) {
                         Fragment fragment;
                         mainActivity = (MainActivity) getActivity();
-                        if(mainActivity.acc.getRole().equals("ADMIN"))
-                            fragment = new FragmentGymDetailAdmin(position);
-                        else
+                        if(mainActivity.acc== null || mainActivity.acc.getRole().equals("USER"))
                             fragment = new FragmentGymDetail(position);
+                        else
+                            fragment = new FragmentGymDetailAdmin(position);
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
                         fragmentTransaction.addToBackStack("Fragment home");
@@ -164,10 +165,11 @@ public class FragmentHome extends Fragment {
                     public void onNoteClick(Trainer position) {
                         Fragment fragment;
                         mainActivity = (MainActivity) getActivity();
-                        if(mainActivity.acc.getRole().equals("ADMIN"))
-                            fragment = new FragmentPTDetailAdmin(position);
-                        else
+                        if(mainActivity.acc == null ||mainActivity.acc.getRole().equals("USER") )
                             fragment = new FragmentPtDetail(position);
+                        else
+                            fragment = new FragmentPTDetailAdmin(position);
+
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainerView,fragment );
                         fragmentTransaction.addToBackStack("Fragment home");
@@ -200,10 +202,10 @@ public class FragmentHome extends Fragment {
                     public void onNoteClick(combo position) {
                         Fragment fragment;
                         mainActivity = (MainActivity) getActivity();
-                        if(mainActivity.acc.getRole().equals("ADMIN"))
-                            fragment = new FragmentComboDetailAdmin(position);
-                        else
+                        if(mainActivity.acc == null ||mainActivity.acc.getRole().equals("USER"))
                             fragment =  new FragmentComboDetail(position);
+                        else
+                            fragment = new FragmentComboDetailAdmin(position);
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainerView,fragment);
                         fragmentTransaction.addToBackStack("Fragment home");

@@ -21,7 +21,7 @@ import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Request.Comment;
 import com.example.lib.Model.Request.Trainer;
-import com.example.lib.Model.Request.userImg;
+import com.example.lib.Model.Response.ptImgResponse;
 import com.example.lib.Repository.Admin;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
@@ -117,17 +117,17 @@ public class FragmentPTDetailAdmin extends Fragment {
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
 
-        Call<List<userImg>> getImg = home.getByPt(position.getId());
-        getImg.enqueue(new Callback<List<userImg>>() {
+        Call<List<ptImgResponse>> getImg = home.getByPt(position.getId());
+        getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
-            public void onResponse(Call<List<userImg>> call, Response<List<userImg>> response) {
+            public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 rcv_img_detail_pt.setLayoutManager(gridLayoutManager);
                 rcv_img_detail_pt.setAdapter(new UserImgAdapter(response.body()));
             }
 
             @Override
-            public void onFailure(Call<List<userImg>> call, Throwable t) {
+            public void onFailure(Call<List<ptImgResponse>> call, Throwable t) {
 
             }
         });

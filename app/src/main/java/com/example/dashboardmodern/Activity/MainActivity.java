@@ -52,13 +52,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragment = new FragmentHome();
 
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             acc = (userInfoResponse) bundle.getSerializable("data");
             pt = (PTInfoResponse) bundle.getSerializable("pt");
             jwt = bundle.getString("jwt");
             isGoogle = bundle.getBoolean("isGoogle");
+        } else {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.no_info);
         }
 
         if(pt != null){
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case R.id.nav_home:
                 fragment = new FragmentHome();
@@ -131,7 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragment = new FragmentUserInfo(acc);
                 break;
             case R.id.nav_logout:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            case R.id.nav_login:
+                intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;

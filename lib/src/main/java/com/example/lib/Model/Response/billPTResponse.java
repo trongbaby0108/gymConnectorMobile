@@ -2,6 +2,8 @@ package com.example.lib.Model.Response;
 
 import com.example.lib.Model.Request.Trainer;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data

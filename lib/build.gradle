@@ -39,5 +39,5 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-
+    implementation group: 'cz.msebera.android' , name: 'httpclient', version: '4.5.3'
 }
