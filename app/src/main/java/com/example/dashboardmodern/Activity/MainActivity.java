@@ -25,10 +25,19 @@ import com.example.dashboardmodern.Fragment.Client.FragmentTrainer;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserByPt;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserInfo;
 import com.example.dashboardmodern.R;
+import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Request.Trainer;
+import com.example.lib.Model.Request.combo;
 import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Response.billPTResponse;
 import com.example.lib.Model.Response.userInfoResponse;
+import com.example.lib.Repository.Client;
+import com.example.lib.RetrofitClient;
 import com.google.android.material.navigation.NavigationView;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vn.momo.momo_partner.AppMoMoLib;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public userInfoResponse acc;
     public PTInfoResponse pt;
     public String jwt;
+    public Trainer trainer;
+    public combo combo;
+    public String action;
     boolean isGoogle;
     Fragment fragment;
 
@@ -170,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Client client = RetrofitClient.getRetrofit().create(Client.class);
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
             if(data != null) {
@@ -178,6 +191,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String token = data.getStringExtra("data"); //Token response
                     String phoneNumber = data.getStringExtra("phonenumber");
                     String env = data.getStringExtra("env");
+
+                    if(action.equals("checkoutPT")){
+                        Call<billPTResponse> checkPTExit = client.checkPTExit(acc.getId());
+                        checkPTExit.enqueue(new Callback<billPTResponse>() {
+                            @Override
+                            public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
+                                if(response.body().getTrainer() !=null){
+                                    ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
+                                } else {
+                                    Call<Boolean> checkout = client.checkoutPT(acc.getId(),trainer.getId());
+                                    checkout.enqueue(new Callback<Boolean>() {
+                                        @Override
+                                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                            ShowMessage("Book PT thành công");
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Boolean> call, Throwable t) {
+                                            ShowMessage(t.getMessage());
+                                            System.out.println(t.getMessage());
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<billPTResponse> call, Throwable t) {
+                                System.out.println(t.getMessage());
+                            }
+                        });
+                    } else {
+                        Call<Boolean> checkout = client.checkout(acc.getId(),combo.getGym().getId(),combo.getId());
+                        checkout.enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                ShowMessage("Book thành công");
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                ShowMessage(t.getMessage());
+                                System.out.println(t.getMessage());
+                            }
+                        });
+                    }
+
                     if(env == null){
                         env = "app";
                     }
@@ -185,24 +244,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if(token != null && !token.equals("")) {
 
                     } else {
-                        //ShowMessage("Không thành công");
+                        ShowMessage("Không thành công");
                     }
                 } else if(data.getIntExtra("status", -1) == 1) {
-                    //TOKEN FAIL
                     String message = data.getStringExtra("message") != null?data.getStringExtra("message"):"Thất bại";
-                    //ShowMessage("message: " + message);
+                    ShowMessage("message: " + message);
                 } else if(data.getIntExtra("status", -1) == 2) {
-                    //TOKEN FAIL
-                    //ShowMessage("Không thành công");
+                    ShowMessage("Không thành công");
                 } else {
-                    //TOKEN FAIL
-                    //ShowMessage("Không thành công");
+                    ShowMessage("Không thành công");
                 }
             } else {
-                //ShowMessage("Không thành công");
+                ShowMessage("Không thành công");
             }
         } else {
-            //ShowMessage("Không thành công");
+            ShowMessage("Không thành công");
         }
     }
 

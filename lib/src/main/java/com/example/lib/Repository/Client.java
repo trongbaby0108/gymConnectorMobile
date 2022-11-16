@@ -4,8 +4,11 @@ import com.example.lib.Model.Request.addGymComment;
 import com.example.lib.Model.Request.addPtComment;
 import com.example.lib.Model.Request.loginRequest;
 import com.example.lib.Model.Request.ptSignIn;
+import com.example.lib.Model.Request.updateUser;
 import com.example.lib.Model.Request.userSignIn;
 import com.example.lib.Model.Response.PTInfoResponse;
+import com.example.lib.Model.Response.billGymResponse;
+import com.example.lib.Model.Response.billPTResponse;
 import com.example.lib.Model.Response.userInfoResponse;
 
 import okhttp3.MultipartBody;
@@ -78,5 +81,35 @@ public interface Client {
 
     @POST("client/comment/addGymComment")
     Call<String> addGymComment(@Body addGymComment addGymComment);
+
+
+    @GET("billGym/checkout")
+    Call<Boolean> checkout(@Query("idUser") int idUser,
+                           @Query("idGym") int idGym,
+                           @Query("idCombo") int idCombo);
+
+    @GET("billGym/checkGymExit")
+    Call<billGymResponse> checkGymExit(@Query("idUser") int idUser);
+
+    @GET("billPt/checkout")
+    Call<Boolean> checkoutPT(@Query("idUser") int idUser,
+                             @Query("idPt") int idPT);
+
+    @GET("billPt/checkPTExit")
+    Call<billPTResponse> checkPTExit(@Query("idUser") int idUser);
+
+    @POST("user/update")
+    Call<userInfoResponse> update(
+            @Body updateUser updateUser);
+
+    @GET("personal_trainer/update")
+    Call<PTInfoResponse> updatePT(
+            @Query("id") int id,
+            @Query("name") String name,
+            @Query("phone") String phone,
+            @Query("email") String email,
+            @Query("address") String address,
+            @Query("price") int price
+    );
 
 }

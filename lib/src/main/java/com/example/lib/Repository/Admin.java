@@ -59,37 +59,11 @@ public interface Admin {
             @Query("gymId") int gymId
     );
 
-    @GET("billGym/checkout")
-    Call<Boolean> checkout(@Query("idUser") int idUser,
-                           @Query("idGym") int idGym,
-                           @Query("idCombo") int idCombo);
 
-    @GET("billGym/checkGymExit")
-    Call<billGymResponse> checkGymExit(@Query("idUser") int idUser);
-
-    @GET("billPt/checkout")
-    Call<Boolean> checkoutPT(@Query("idUser") int idUser,
-                           @Query("idPt") int idPT);
-
-    @GET("billPt/checkPTExit")
-    Call<billPTResponse> checkPTExit(@Query("idUser") int idUser);
 
     @GET("user/getUserByPT")
     Call<List<userInfoResponse>> getUserByPT(@Query("idPT") int idPT);
 
-    @POST("user/update")
-    Call<userInfoResponse> update(
-            @Body updateUser updateUser);
-
-    @GET("personal_trainer/update")
-    Call<PTInfoResponse> updatePT(
-            @Query("id") int id,
-            @Query("name") String name,
-            @Query("phone") String phone,
-            @Query("email") String email,
-            @Query("address") String address,
-            @Query("price") int price
-    );
 
     @GET("userAdmin/getUser")
     Call<List<userInfoResponse>> getUserAdmin(

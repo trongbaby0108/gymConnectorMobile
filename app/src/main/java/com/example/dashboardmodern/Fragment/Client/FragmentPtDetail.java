@@ -115,6 +115,9 @@ public class FragmentPtDetail extends Fragment {
         client = RetrofitClient.getRetrofit().create(Client.class);
         home = RetrofitClient.getRetrofit().create(Home.class);
         AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pt_detail, container, false);
 
@@ -131,25 +134,22 @@ public class FragmentPtDetail extends Fragment {
         ptPhone.setText(trainer.getPhone());
 
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-        if(Float.toString(trainer.getRate()).equals("NaN"))
-        ratingBar.setRating(5.0f);
+        ratingBar.setRating(4.0f);
 
         LinearLayout book = view.findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+                Client client = RetrofitClient.getRetrofit().create(Client.class);
                 if(mainActivity.acc != null){
-                    Call<billPTResponse> checkPTExit = methods.checkPTExit(mainActivity.acc.getId());
+                    Call<billPTResponse> checkPTExit = client.checkPTExit(mainActivity.acc.getId());
                     checkPTExit.enqueue(new Callback<billPTResponse>() {
                         @Override
                         public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
                             if(response.body().getTrainer() !=null){
                                 ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
-                            }
-                            else {
-                                Call<Boolean> checkout = methods.checkoutPT(mainActivity.acc.getId(),trainer.getId());
+                            } else {
+                                Call<Boolean> checkout = client.checkoutPT(mainActivity.acc.getId(),trainer.getId());
                                 checkout.enqueue(new Callback<Boolean>() {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -181,13 +181,9 @@ public class FragmentPtDetail extends Fragment {
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if(mainActivity.acc != null)
-                    requestPayment();
-                else {
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
+                mainActivity.action = "checkoutPT";
+                mainActivity.trainer = trainer;
+                requestPayment();
             }
         });
 
@@ -225,7 +221,6 @@ public class FragmentPtDetail extends Fragment {
         });
 
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
-
         Call<List<ptImgResponse>> getImg = home.getByPt(trainer.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override

@@ -21,6 +21,7 @@ import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.PTInfoResponse;
 import com.example.lib.Model.Response.ptImgResponse;
 import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
@@ -112,7 +113,7 @@ public class FragmentPtInfo extends Fragment {
             }
         });
 
-        Admin admin = RetrofitClient.getRetrofit().create(Admin.class);
+        Client admin = RetrofitClient.getRetrofit().create(Client.class);
 
         Button btn_update = view.findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {

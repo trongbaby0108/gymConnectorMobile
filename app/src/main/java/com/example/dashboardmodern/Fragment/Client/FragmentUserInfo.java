@@ -20,6 +20,7 @@ import com.example.lib.Model.Response.billGymResponse;
 import com.example.lib.Model.Response.billPTResponse;
 import com.example.lib.Model.Response.userInfoResponse;
 import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
@@ -79,7 +80,7 @@ public class FragmentUserInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+        Client methods = RetrofitClient.getRetrofit().create(Client.class);
 
         view = inflater.inflate(R.layout.fragment_user, container, false);
         if(user != null){

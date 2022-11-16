@@ -17,6 +17,7 @@ import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.billGymResponse;
 import com.example.lib.Model.Request.combo;
 import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -106,7 +107,7 @@ public class FragmentComboDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+                Client methods = RetrofitClient.getRetrofit().create(Client.class);
 
                 Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.acc.getId());
                 checkGymExit.enqueue(new Callback<billGymResponse>() {
