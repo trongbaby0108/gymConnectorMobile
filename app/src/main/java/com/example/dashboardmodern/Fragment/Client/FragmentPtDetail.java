@@ -131,7 +131,8 @@ public class FragmentPtDetail extends Fragment {
         ptPhone.setText(trainer.getPhone());
 
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-        ratingBar.setRating(4.0f);
+        if(Float.toString(trainer.getRate()).equals("NaN"))
+        ratingBar.setRating(5.0f);
 
         LinearLayout book = view.findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +181,13 @@ public class FragmentPtDetail extends Fragment {
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPayment();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if(mainActivity.acc != null)
+                    requestPayment();
+                else {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -196,12 +203,9 @@ public class FragmentPtDetail extends Fragment {
                     comment_feedback_pt.setLayoutManager(linearLayoutManager);
                     comment_feedback_pt.setAdapter(commentApdapter);
                 }
-
             }
-
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
-
             }
         });
 
@@ -222,7 +226,6 @@ public class FragmentPtDetail extends Fragment {
 
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
-
         Call<List<ptImgResponse>> getImg = home.getByPt(trainer.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
@@ -237,7 +240,6 @@ public class FragmentPtDetail extends Fragment {
 
             }
         });
-
 
         return view ;
     }
