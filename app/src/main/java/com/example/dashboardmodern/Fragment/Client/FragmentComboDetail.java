@@ -1,5 +1,6 @@
 package com.example.dashboardmodern.Fragment.Client;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.dashboardmodern.Activity.LoginActivity;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.billGymResponse;
@@ -91,7 +93,6 @@ public class FragmentComboDetail extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_combo_detail, container, false);
-
         ImageView gymImg = view.findViewById(R.id.gymImg);
         TextView comboName = view.findViewById(R.id.comboName);
         TextView comboPrice = view.findViewById(R.id.comboPrice);
@@ -103,48 +104,60 @@ public class FragmentComboDetail extends Fragment {
         comboDesc.setText("Địa chỉ: "+combo.getGym().getAddress());
         comboPrice.setText("Giá: "+ combo.getPrice());
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Client methods = RetrofitClient.getRetrofit().create(Client.class);
+
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                Client methods = RetrofitClient.getRetrofit().create(Client.class);
 
-                Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.acc.getId());
-                checkGymExit.enqueue(new Callback<billGymResponse>() {
-                    @Override
-                    public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
-                        if(response.body().getGym() !=null){
-                            ShowMessage("Bạn đã có phòng gym rồi mà........");
+                if(mainActivity.acc == null){
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.acc.getId());
+                    checkGymExit.enqueue(new Callback<billGymResponse>() {
+                        @Override
+                        public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
+                            if(response.body().getGym() !=null){
+                                ShowMessage("Bạn đã có phòng gym rồi mà........");
+                            }
+                            else {
+                                Call<Boolean> checkout = methods.checkout(mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
+                                checkout.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        ShowMessage("Book thành công");
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        ShowMessage(t.getMessage());
+                                        System.out.println(t.getMessage());
+                                    }
+                                });
+                            }
                         }
-                        else {
-                            Call<Boolean> checkout = methods.checkout(mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
-                            checkout.enqueue(new Callback<Boolean>() {
-                                @Override
-                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                                    ShowMessage("Book thành công");
-                                }
 
-                                @Override
-                                public void onFailure(Call<Boolean> call, Throwable t) {
-                                    ShowMessage(t.getMessage());
-                                    System.out.println(t.getMessage());
-                                }
-                            });
+                        @Override
+                        public void onFailure(Call<billGymResponse> call, Throwable t) {
+                            System.out.println(t.getMessage());
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<billGymResponse> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                    }
-                });
+                    });
+                }
             }
         });
 
         Checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPayment();
+                if(mainActivity.acc == null){
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                } else{
+                    requestPayment();
+                }
             }
         });
 
