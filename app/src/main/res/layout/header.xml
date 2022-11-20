@@ -8,22 +8,22 @@
     android:padding="20dp">
 
     <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/icons8_gym_60"/>
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_g"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/baloo"
-        android:text="Gym v Fitness"
+        android:text="Fitness Time!!!"
         android:textSize="24sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="Come with my team"
+        android:text="Hãy đến với chúng tôi"
         android:textSize="14sp" />
 
 </LinearLayout>

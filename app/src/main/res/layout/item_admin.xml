@@ -11,15 +11,15 @@
         android:background="@drawable/bg_round"
         android:layout_margin="15dp"
         android:padding="10dp">
+
         <ImageView
             android:id="@+id/img_Avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/icon_gym3"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-            app:layout_constraintEnd_toEndOf="@+id/imageView8"
-            app:layout_constraintStart_toStartOf="@+id/imageView8"
-            app:layout_constraintTop_toTopOf="@+id/imageView8" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtName"

@@ -79,6 +79,8 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:background="@drawable/view_bg4"
+                android:layout_margin="10dp"
                 android:id="@+id/ListGym"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

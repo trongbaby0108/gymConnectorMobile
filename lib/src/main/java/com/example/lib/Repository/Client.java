@@ -129,7 +129,7 @@ public interface Client {
             @Query("price") int price
     );
 
-    @GET("client/personalTrainer/getUserByPT")
+    @POST("client/personalTrainer/getUserByPT")
     Call<List<userInfoResponse>> getUserByPT(
             @Header("Authorization") String auth,
             @Query("idPT") int idPT);
