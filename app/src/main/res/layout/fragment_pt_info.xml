@@ -124,14 +124,14 @@
                 android:id="@+id/btn_addIMG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ccccff"
+                android:background="@drawable/bg_normal"
                 android:text="Thêm ảnh" />
             <Button
                 android:id="@+id/btn_update"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ccccff"
+                android:background="@drawable/bg_normal"
                 android:text="Cập nhật" />
 
         </LinearLayout>
@@ -142,7 +142,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 
