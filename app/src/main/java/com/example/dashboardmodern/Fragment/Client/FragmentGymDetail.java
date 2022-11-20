@@ -217,7 +217,7 @@ public class FragmentGymDetail extends Fragment {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Call<String> addComment = client.addGymComment(new addGymComment(comment.getText().toString(),ratingBar.getRating(),gym.getId(),mainActivity.acc.getId()));
+                    Call<String> addComment = client.addGymComment("Bearer "+mainActivity.jwt,new addGymComment(comment.getText().toString(),ratingBar.getRating(),gym.getId(),mainActivity.acc.getId()));
                     addComment.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {

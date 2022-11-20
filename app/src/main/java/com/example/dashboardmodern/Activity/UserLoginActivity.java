@@ -47,6 +47,7 @@ public class UserLoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if(response.body()!=null){
+                            String jwt = response.body();
                             Call<userInfoResponse> getUser = methods.getUser(response.body());
                             getUser.enqueue(new Callback<userInfoResponse>() {
                                 @Override
@@ -55,6 +56,7 @@ public class UserLoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     bundle.putSerializable("data",response.body());
+                                    bundle.putString("jwt", jwt);
                                     bundle.putBoolean("isNormal",true);
                                     bundle.putBoolean("isGoogle",false);
                                     bundle.putBoolean("isFaceBook",false);
@@ -99,16 +101,40 @@ public class UserLoginActivity extends AppCompatActivity {
                 loginGoogle.enqueue(new Callback<userInfoResponse>() {
                     @Override
                     public void onResponse(Call<userInfoResponse> call, Response<userInfoResponse> response) {
-                        Bundle bundle = new Bundle();
-                        Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        bundle.putSerializable("data",response.body());
-                        bundle.putBoolean("isNormal",false);
-                        bundle.putBoolean("isGoogle",true);
-                        bundle.putBoolean("isFaceBook",false);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
+                        Call<String> login = methods.login(new loginRequest(response.body().getUsername(),response.body().getUsername()));
+                        login.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String jwt = response.body();
+                                Call<userInfoResponse> getUser = methods.getUser(response.body());
+                                getUser.enqueue(new Callback<userInfoResponse>() {
+                                    @Override
+                                    public void onResponse(Call<userInfoResponse> call, Response<userInfoResponse> response) {
+                                        Bundle bundle = new Bundle();
+                                        Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        bundle.putSerializable("data",response.body());
+                                        bundle.putString("jwt",jwt);
+                                        bundle.putBoolean("isNormal",false);
+                                        bundle.putBoolean("isGoogle",true);
+                                        bundle.putBoolean("isFaceBook",false);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<userInfoResponse> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -136,6 +162,14 @@ public class UserLoginActivity extends AppCompatActivity {
             }
         });
 
+        TextView txtForgetPass = findViewById(R.id.forget_pass);
+        txtForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +178,8 @@ public class UserLoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     private void signIn() {

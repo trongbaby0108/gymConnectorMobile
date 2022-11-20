@@ -116,7 +116,7 @@ public class FragmentComboDetail extends Fragment {
                     startActivity(intent);
                 }
                 else {
-                    Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.acc.getId());
+                    Call<billGymResponse> checkGymExit = methods.checkGymExit("Bearer "+mainActivity.jwt,mainActivity.acc.getId());
                     checkGymExit.enqueue(new Callback<billGymResponse>() {
                         @Override
                         public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
@@ -124,7 +124,7 @@ public class FragmentComboDetail extends Fragment {
                                 ShowMessage("Bạn đã có phòng gym rồi mà........");
                             }
                             else {
-                                Call<Boolean> checkout = methods.checkout(mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
+                                Call<Boolean> checkout = methods.checkout(mainActivity.jwt,mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
                                 checkout.enqueue(new Callback<Boolean>() {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {

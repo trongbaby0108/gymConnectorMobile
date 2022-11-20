@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.UserPTAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.PTInfoResponse;
 import com.example.lib.Model.Response.userInfoResponse;
 import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import java.util.List;
@@ -23,15 +25,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentUserByPt#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentUserByPt extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -74,10 +70,12 @@ public class FragmentUserByPt extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_user_by_pt, container, false);
         RecyclerView rcv_Users = view.findViewById(R.id.rcv_Users);
         rcv_Users.setHasFixedSize(true);
+        MainActivity mainActivity = (MainActivity) getActivity();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
         rcv_Users.setLayoutManager(linearLayoutManager);
-        Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
-        Call<List<userInfoResponse>> getUserByPT =  methods.getUserByPT(pt.getId());
+        Client client = RetrofitClient.getRetrofit().create(Client.class);
+        Call<List<userInfoResponse>> getUserByPT =  client.getUserByPT("Bearer "+mainActivity.jwt,pt.getId());
+        System.out.println(mainActivity.jwt);
         getUserByPT.enqueue(new Callback<List<userInfoResponse>>() {
             @Override
             public void onResponse(Call<List<userInfoResponse>> call, Response<List<userInfoResponse>> response) {

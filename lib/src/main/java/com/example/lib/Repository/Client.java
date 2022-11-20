@@ -11,11 +11,14 @@ import com.example.lib.Model.Response.billGymResponse;
 import com.example.lib.Model.Response.billPTResponse;
 import com.example.lib.Model.Response.userInfoResponse;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -32,7 +35,7 @@ public interface Client {
             @Part MultipartBody.Part file
     );
 
-    @GET("signUser/sendToken")
+    @POST("signUser/sendToken")
     Call<String> sendTokenUser(@Query("username")String username);
 
     @GET("signUser/confirmToken")
@@ -69,41 +72,55 @@ public interface Client {
     Call<String> login(
             @Body loginRequest loginRequest);
 
-    @GET("auth/getUserInfo")
+    @POST("auth/getUserInfo")
     Call<userInfoResponse> getUser(@Query("jwt") String token);
 
-    @GET("auth/getPTInfo")
+    @POST("auth/getPTInfo")
     Call<PTInfoResponse> getPTInfo(@Query("jwt") String token);
 
     @POST("client/comment/addPtComment")
-    Call<String> addPtComment(@Body addPtComment addCommentPt);
+    Call<String> addPtComment(
+            @Header("Authorization") String auth,
+            @Body addPtComment addCommentPt);
 
 
     @POST("client/comment/addGymComment")
-    Call<String> addGymComment(@Body addGymComment addGymComment);
+    Call<String> addGymComment(
+            @Header("Authorization") String auth,
+            @Body addGymComment addGymComment);
 
 
-    @GET("billGym/checkout")
-    Call<Boolean> checkout(@Query("idUser") int idUser,
+    @GET("client/billGym/checkout")
+    Call<Boolean> checkout(
+            @Header("Authorization") String auth,
+            @Query("idUser") int idUser,
                            @Query("idGym") int idGym,
                            @Query("idCombo") int idCombo);
 
-    @GET("billGym/checkGymExit")
-    Call<billGymResponse> checkGymExit(@Query("idUser") int idUser);
+    @GET("client/billGym/checkGymExit")
+    Call<billGymResponse> checkGymExit(
+            @Header("Authorization") String auth,
+            @Query("idUser") int idUser);
 
-    @GET("billPt/checkout")
-    Call<Boolean> checkoutPT(@Query("idUser") int idUser,
-                             @Query("idPt") int idPT);
+    @GET("client/billPt/checkout")
+    Call<Boolean> checkoutPT(
+            @Header("Authorization") String auth,
+            @Query("idUser") int idUser,
+            @Query("idPt") int idPT);
 
-    @GET("billPt/checkPTExit")
-    Call<billPTResponse> checkPTExit(@Query("idUser") int idUser);
+    @GET("client/billPt/checkPTExit")
+    Call<billPTResponse> checkPTExit(
+            @Header("Authorization") String auth,
+            @Query("idUser") int idUser);
 
-    @POST("user/update")
+    @POST("client/user/update")
     Call<userInfoResponse> update(
+            @Header("Authorization") String auth,
             @Body updateUser updateUser);
 
-    @GET("personal_trainer/update")
+    @GET("/client/personalTrainer/update")
     Call<PTInfoResponse> updatePT(
+            @Header("Authorization") String auth,
             @Query("id") int id,
             @Query("name") String name,
             @Query("phone") String phone,
@@ -111,5 +128,11 @@ public interface Client {
             @Query("address") String address,
             @Query("price") int price
     );
+
+    @GET("client/personalTrainer/getUserByPT")
+    Call<List<userInfoResponse>> getUserByPT(
+            @Header("Authorization") String auth,
+            @Query("idPT") int idPT);
+
 
 }

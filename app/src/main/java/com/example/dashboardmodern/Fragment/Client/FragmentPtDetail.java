@@ -134,7 +134,7 @@ public class FragmentPtDetail extends Fragment {
         ptPhone.setText(trainer.getPhone());
 
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-        ratingBar.setRating(4.0f);
+        ratingBar.setRating(trainer.getRate());
 
         LinearLayout book = view.findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {
@@ -142,14 +142,15 @@ public class FragmentPtDetail extends Fragment {
             public void onClick(View view) {
                 Client client = RetrofitClient.getRetrofit().create(Client.class);
                 if(mainActivity.acc != null){
-                    Call<billPTResponse> checkPTExit = client.checkPTExit(mainActivity.acc.getId());
+                    //bug
+                    Call<billPTResponse> checkPTExit = client.checkPTExit("Bearer "+mainActivity.jwt,mainActivity.acc.getId());
                     checkPTExit.enqueue(new Callback<billPTResponse>() {
                         @Override
                         public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
-                            if(response.body().getTrainer() !=null){
+                            if(response.body() !=null){
                                 ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
                             } else {
-                                Call<Boolean> checkout = client.checkoutPT(mainActivity.acc.getId(),trainer.getId());
+                                Call<Boolean> checkout = client.checkoutPT("Bearer "+mainActivity.jwt,mainActivity.acc.getId(),trainer.getId());
                                 checkout.enqueue(new Callback<Boolean>() {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -314,7 +315,7 @@ public class FragmentPtDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
-                Call<String> addComment = client.addPtComment(new addPtComment(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId()));
+                Call<String> addComment = client.addPtComment(mainActivity.jwt,new addPtComment(comment.getText().toString(),ratingBar.getRating(),trainer.getId(),mainActivity.acc.getId()));
                 addComment.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

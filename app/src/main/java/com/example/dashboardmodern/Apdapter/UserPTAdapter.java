@@ -52,7 +52,8 @@ public class UserPTAdapter extends RecyclerView.Adapter<UserPTAdapter.UserPTView
 
     @Override
     public int getItemCount() {
-        return userInfoResponses.size();
+        if(userInfoResponses == null) return 0 ;
+        else return userInfoResponses.size();
     }
 
     public static class UserPTViewHolder extends RecyclerView.ViewHolder{

@@ -29,19 +29,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentUserInfo#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentUserInfo extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private RecyclerView rcvUser;
@@ -81,7 +74,7 @@ public class FragmentUserInfo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Client methods = RetrofitClient.getRetrofit().create(Client.class);
-
+        MainActivity mainActivity = (MainActivity) getActivity();
         view = inflater.inflate(R.layout.fragment_user, container, false);
         if(user != null){
             TextView txtName = view.findViewById(R.id.full_name);
@@ -95,6 +88,7 @@ public class FragmentUserInfo extends Fragment {
 
             TextInputEditText email = view.findViewById(R.id.txtEmail);
             email.setText(user.getEmail());
+            email.setFocusable(false);
 
             TextInputEditText phone = view.findViewById(R.id.txtPhone);
             phone.setText(user.getPhone());
@@ -106,11 +100,10 @@ public class FragmentUserInfo extends Fragment {
             btn_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Call<userInfoResponse> update =methods.update(new updateUser(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString()));
+                    Call<userInfoResponse> update =methods.update(mainActivity.jwt, new updateUser(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString()));
                     update.enqueue(new Callback<userInfoResponse>() {
                         @Override
                         public void onResponse(Call<userInfoResponse> call, Response<userInfoResponse> response) {
-                            MainActivity mainActivity = (MainActivity) getActivity();
                             mainActivity.acc = response.body();
                             ShowMessage("cập nhật thành công");
                         }
@@ -123,12 +116,11 @@ public class FragmentUserInfo extends Fragment {
                 }
             });
 
-
-            Call<billGymResponse> checkGymExit = methods.checkGymExit(user.getId());
+            Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.jwt,user.getId());
             checkGymExit.enqueue(new Callback<billGymResponse>() {
                 @Override
                 public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
-                    if(response.body().getGym() != null){
+                    if(response.body() != null && response.body().getGym() != null){
                         ImageView imgGym = view.findViewById(R.id.imgGym);
                         Picasso.get().load(response.body().getGym().getAvatar()).into(imgGym);
                         TextView txt_gym = view.findViewById(R.id.txt_gym);
@@ -142,11 +134,11 @@ public class FragmentUserInfo extends Fragment {
                 }
             });
 
-            Call<billPTResponse> checkPTExit = methods.checkPTExit(user.getId());
+            Call<billPTResponse> checkPTExit = methods.checkPTExit("Bearer "+mainActivity.jwt,user.getId());
             checkPTExit.enqueue(new Callback<billPTResponse>() {
                 @Override
                 public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
-                    if(response.body().getTrainer() != null){
+                    if(response.body() != null && response.body().getTrainer() != null){
                         ImageView imgPT = view.findViewById(R.id.imgPT);
                         Picasso.get().load(response.body().getTrainer().getAvatar()).into(imgPT);
                         TextView txt_pt = view.findViewById(R.id.txt_pt);

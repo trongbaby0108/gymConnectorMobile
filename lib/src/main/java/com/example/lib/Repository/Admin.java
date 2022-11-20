@@ -59,12 +59,6 @@ public interface Admin {
             @Query("gymId") int gymId
     );
 
-
-
-    @GET("user/getUserByPT")
-    Call<List<userInfoResponse>> getUserByPT(@Query("idPT") int idPT);
-
-
     @GET("userAdmin/getUser")
     Call<List<userInfoResponse>> getUserAdmin(
             @Header("Authorization") String auth

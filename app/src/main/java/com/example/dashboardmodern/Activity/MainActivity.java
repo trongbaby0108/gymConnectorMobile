@@ -193,14 +193,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String env = data.getStringExtra("env");
 
                     if(action.equals("checkoutPT")){
-                        Call<billPTResponse> checkPTExit = client.checkPTExit(acc.getId());
+                        Call<billPTResponse> checkPTExit = client.checkPTExit(jwt, acc.getId());
                         checkPTExit.enqueue(new Callback<billPTResponse>() {
                             @Override
                             public void onResponse(Call<billPTResponse> call, Response<billPTResponse> response) {
                                 if(response.body().getTrainer() !=null){
                                     ShowMessage("Bạn đã có phòng Huấn Luyện Viên rồi mà........");
                                 } else {
-                                    Call<Boolean> checkout = client.checkoutPT(acc.getId(),trainer.getId());
+                                    Call<Boolean> checkout = client.checkoutPT(jwt, acc.getId(),trainer.getId());
                                     checkout.enqueue(new Callback<Boolean>() {
                                         @Override
                                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
                         });
                     } else {
-                        Call<Boolean> checkout = client.checkout(acc.getId(),combo.getGym().getId(),combo.getId());
+                        Call<Boolean> checkout = client.checkout(jwt,acc.getId(),combo.getGym().getId(),combo.getId());
                         checkout.enqueue(new Callback<Boolean>() {
                             @Override
                             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

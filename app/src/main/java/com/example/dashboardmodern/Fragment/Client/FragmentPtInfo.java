@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
 import com.example.dashboardmodern.R;
 import com.example.lib.Model.Response.PTInfoResponse;
@@ -82,7 +83,7 @@ public class FragmentPtInfo extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pt_info, container, false);
         Home methods = RetrofitClient.getRetrofit().create(Home.class);
-
+        MainActivity mainActivity = (MainActivity) getActivity();
         ImageView profile_image = view.findViewById(R.id.profile_image);
         if(!ptInfoResponse.getAvatar().equals(""))
         Picasso.get().load(ptInfoResponse.getAvatar()).into(profile_image);
@@ -123,6 +124,7 @@ public class FragmentPtInfo extends Fragment {
                 try {
                     cost = Integer.parseInt(txtCost.getText().toString());
                     Call<PTInfoResponse> updatePT = admin.updatePT(
+                            mainActivity.jwt,
                             ptInfoResponse.getId(),
                             txtName.getText().toString(),
                             txtPhone.getText().toString(),

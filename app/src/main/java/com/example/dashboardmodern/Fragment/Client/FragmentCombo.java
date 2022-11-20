@@ -87,11 +87,10 @@ public class FragmentCombo extends Fragment {
                     public void onNoteClick(combo position) {
                         MainActivity mainActivity = (MainActivity) getActivity();
                         Fragment fragment ;
-                        if(mainActivity.acc.getRole().equals("ADMIN"))
-                            fragment = new FragmentComboDetailAdmin(position);
-                        else
+                        if(mainActivity.acc == null || mainActivity.acc.getRole().equals("USER"))
                             fragment = new FragmentComboDetail(position);
-
+                        else
+                            fragment = new FragmentComboDetailAdmin(position);
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
                         fragmentTransaction.addToBackStack("Fragment home");
