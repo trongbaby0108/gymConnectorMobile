@@ -94,7 +94,7 @@ public class FragmentGym extends Fragment {
                     public void onNoteClick(Gym position) {
                         MainActivity mainActivity = (MainActivity) getActivity();
                         Fragment fragment ;
-                        if(mainActivity.acc.getRole().equals("ADMIN"))
+                        if(mainActivity.acc != null && mainActivity.acc.getRole().equals("ADMIN"))
                             fragment = new FragmentGymDetailAdmin(position);
                         else
                             fragment = new FragmentGymDetail(position);
