@@ -44,6 +44,7 @@ public class PTSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ptsign_up);
         username = findViewById(R.id.account);
+
         pass = findViewById(R.id.pass);
         email = findViewById(R.id.email);
         fullname = findViewById(R.id.name);
