@@ -22,6 +22,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Client {
@@ -40,7 +41,7 @@ public interface Client {
 
     @GET("signUser/confirmToken")
     Call<String> confirmTokenUser(@Query("username")String username ,
-                                  @Query("token")String token );
+                                  @Query("token")String token);
 
     @GET("signUser/createGoogleUser")
     Call<userInfoResponse> createGoogleUser(@Query("email")String email ,
@@ -97,10 +98,11 @@ public interface Client {
                            @Query("idGym") int idGym,
                            @Query("idCombo") int idCombo);
 
-    @GET("client/billGym/checkGymExit")
+    @GET("client/billGym/checkGymExit/{id}")
     Call<billGymResponse> checkGymExit(
             @Header("Authorization") String auth,
-            @Query("idUser") int idUser);
+            @Path("id") int id);
+
 
     @GET("client/billPt/checkout")
     Call<Boolean> checkoutPT(
@@ -108,10 +110,10 @@ public interface Client {
             @Query("idUser") int idUser,
             @Query("idPt") int idPT);
 
-    @GET("client/billPt/checkPTExit")
+    @GET("client/billPt/checkPTExit/{id}")
     Call<billPTResponse> checkPTExit(
             @Header("Authorization") String auth,
-            @Query("idUser") int idUser);
+            @Path("id") int id);
 
     @POST("client/user/update")
     Call<userInfoResponse> update(

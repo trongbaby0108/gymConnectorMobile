@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             acc = (userInfoResponse) bundle.getSerializable("data");
             pt = (PTInfoResponse) bundle.getSerializable("pt");
             jwt = bundle.getString("jwt");
+            System.out.println(jwt);
             isGoogle = bundle.getBoolean("isGoogle");
         } else {
             navigationView.getMenu().clear();

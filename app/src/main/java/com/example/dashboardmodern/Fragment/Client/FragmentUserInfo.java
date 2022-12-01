@@ -100,7 +100,7 @@ public class FragmentUserInfo extends Fragment {
             btn_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Call<userInfoResponse> update =methods.update(mainActivity.jwt, new updateUser(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString()));
+                    Call<userInfoResponse> update =methods.update("Bearer "+mainActivity.jwt, new updateUser(user.getId(),name.getText().toString(),phone.getText().toString(),email.getText().toString(),address.getText().toString()));
                     update.enqueue(new Callback<userInfoResponse>() {
                         @Override
                         public void onResponse(Call<userInfoResponse> call, Response<userInfoResponse> response) {
@@ -116,7 +116,7 @@ public class FragmentUserInfo extends Fragment {
                 }
             });
 
-            Call<billGymResponse> checkGymExit = methods.checkGymExit(mainActivity.jwt,user.getId());
+            Call<billGymResponse> checkGymExit = methods.checkGymExit("Bearer "+mainActivity.jwt,user.getId());
             checkGymExit.enqueue(new Callback<billGymResponse>() {
                 @Override
                 public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {

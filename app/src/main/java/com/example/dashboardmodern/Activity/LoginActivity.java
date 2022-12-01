@@ -15,16 +15,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        btnAdmin = findViewById(R.id.btn_admin);
-        btnAdmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//
+//        btnAdmin = findViewById(R.id.btn_admin);
+//        btnAdmin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         btnUser = findViewById(R.id.btn_user);
         btnUser.setOnClickListener(new View.OnClickListener() {

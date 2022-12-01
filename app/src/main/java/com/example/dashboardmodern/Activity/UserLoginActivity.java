@@ -88,7 +88,6 @@ public class UserLoginActivity extends AppCompatActivity {
                         .requestEmail()
                         .build();
                 mGoogleSignInClient = GoogleSignIn.getClient(UserLoginActivity.this,gso);
-
                 signIn();
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UserLoginActivity.this);
                 Client methods = RetrofitClient.getRetrofit().create(Client.class);
