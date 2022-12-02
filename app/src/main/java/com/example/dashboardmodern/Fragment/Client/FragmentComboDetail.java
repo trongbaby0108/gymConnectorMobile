@@ -105,7 +105,7 @@ public class FragmentComboDetail extends Fragment {
         comboPrice.setText("Giá: "+ combo.getPrice());
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        Client methods = RetrofitClient.getRetrofit().create(Client.class);
+        Client client = RetrofitClient.getRetrofit().create(Client.class);
 
         book.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,15 +116,15 @@ public class FragmentComboDetail extends Fragment {
                     startActivity(intent);
                 }
                 else {
-                    Call<billGymResponse> checkGymExit = methods.checkGymExit("Bearer "+mainActivity.jwt,mainActivity.acc.getId());
+                    Call<billGymResponse> checkGymExit = client.checkGymExit("Bearer "+mainActivity.jwt,mainActivity.acc.getId());
                     checkGymExit.enqueue(new Callback<billGymResponse>() {
                         @Override
                         public void onResponse(Call<billGymResponse> call, Response<billGymResponse> response) {
-                            if(response.body().getGym() !=null){
+                            if(response.body() !=null){
                                 ShowMessage("Bạn đã có phòng gym rồi mà........");
                             }
                             else {
-                                Call<Boolean> checkout = methods.checkout(mainActivity.jwt,mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
+                                Call<Boolean> checkout = client.checkout("Bearer "+mainActivity.jwt,mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
                                 checkout.enqueue(new Callback<Boolean>() {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -168,30 +168,21 @@ public class FragmentComboDetail extends Fragment {
         AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT);
         AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN);
         Map<String, Object> eventValue = new HashMap<>();
-        //client Required
-        eventValue.put("merchantname", merchantName); //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
-        eventValue.put("merchantcode", merchantCode); //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-        eventValue.put("amount", 10000); //Kiểu integer
-        eventValue.put("orderId", "123123123"); //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
-        eventValue.put("orderLabel", "Mã đơn hàng"); //gán nhãn
-
-        //client Optional - bill info
-        eventValue.put("merchantnamelabel", "Dịch vụ");//gán nhãn
-        eventValue.put("fee", "0"); //Kiểu integer
-        eventValue.put("description", description); //mô tả đơn hàng - short description
-
-        //client extra data
+        eventValue.put("merchantname", merchantName);
+        eventValue.put("merchantcode", merchantCode);
+        eventValue.put("amount", combo.getPrice());
+        eventValue.put("orderId", "123123123");
+        eventValue.put("orderLabel", "Mã đơn hàng");
+        eventValue.put("merchantnamelabel", "Dịch vụ");
+        eventValue.put("fee", "0");
+        eventValue.put("description", description);
         eventValue.put("requestId",  merchantCode+"merchant_billId_"+System.currentTimeMillis());
         eventValue.put("partnerCode", merchantCode);
-        //Example extra data
         JSONObject objExtraData = new JSONObject();
         try {
             objExtraData.put("site_code", "008");
-            objExtraData.put("site_name", "CGV Cresent Mall");
+            objExtraData.put("site_name", combo.getName());
             objExtraData.put("screen_code", 0);
-            objExtraData.put("screen_name", "Special");
-            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3");
-            objExtraData.put("movie_format", "2D");
         } catch (JSONException e) {
             e.printStackTrace();
         }
