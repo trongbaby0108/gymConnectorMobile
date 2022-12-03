@@ -169,7 +169,7 @@ public class FragmentPtInfo extends Fragment {
         });
 
         RecyclerView rcv_img = view.findViewById(R.id.rcv_img);
-        Call<List<ptImgResponse>> getImg = methods.getByPt(ptInfoResponse.getId());
+        Call<List<ptImgResponse>> getImg = methods.getPicByPt(ptInfoResponse.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
             public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {

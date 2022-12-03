@@ -22,17 +22,27 @@
             <FrameLayout
                 android:id="@+id/productImage"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="400dp"
                 android:background="@drawable/toolbar"
                 android:elevation="4dp"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/gymPic"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/imgList"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
                     android:layout_gravity="center"
                     android:scaleType="fitXY" />
+
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/indicator"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    app:ci_drawable="@drawable/bg_indicator"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom|center"/>
+
 
                 <ImageView
                     android:layout_width="38dp"
@@ -81,6 +91,7 @@
                 android:layout_below="@id/rating"
                 android:background="#fff"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:padding="16dp">
 
                 <TextView
@@ -114,18 +125,44 @@
                     android:textColor="@color/Tex"
                     android:textSize="20sp" />
 
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/comboList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gym"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:background="#fff"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="GÓI TẬP"
+                    android:textColor="@color/Tex"
+                    android:textSize="20sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_combo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
 
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ptList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/gym"
+                android:layout_below="@+id/comboList"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="0dp"
                 android:background="#fff"

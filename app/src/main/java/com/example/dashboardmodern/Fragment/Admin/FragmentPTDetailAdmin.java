@@ -117,7 +117,7 @@ public class FragmentPTDetailAdmin extends Fragment {
         RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
 
 
-        Call<List<ptImgResponse>> getImg = home.getByPt(position.getId());
+        Call<List<ptImgResponse>> getImg = home.getPicByPt(position.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
             public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {

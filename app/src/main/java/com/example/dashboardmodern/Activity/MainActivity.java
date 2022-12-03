@@ -25,7 +25,6 @@ import com.example.dashboardmodern.Fragment.Client.FragmentTrainer;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserByPt;
 import com.example.dashboardmodern.Fragment.Client.FragmentUserInfo;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Request.Gym;
 import com.example.lib.Model.Request.Trainer;
 import com.example.lib.Model.Request.combo;
 import com.example.lib.Model.Response.PTInfoResponse;

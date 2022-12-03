@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dashboardmodern.R;
 import com.example.dashboardmodern.Activity.MainActivity;
 
-import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Repository.Admin;
 import com.example.lib.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;

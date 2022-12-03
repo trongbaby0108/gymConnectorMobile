@@ -1,9 +1,10 @@
 package com.example.lib.Repository;
 
 import com.example.lib.Model.Request.Comment;
-import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Model.Request.Trainer;
 import com.example.lib.Model.Request.combo;
+import com.example.lib.Model.Response.gymImgResponse;
 import com.example.lib.Model.Response.ptImgResponse;
 
 import java.util.List;
@@ -35,5 +36,8 @@ public interface Home {
     Call<List<Comment>> getJudgeByGym(@Path("id")int id);
 
     @GET("home/getPicByPt/{id}")
-    Call<List<ptImgResponse>> getByPt(@Path("id") int id);
+    Call<List<ptImgResponse>> getPicByPt(@Path("id") int id);
+
+    @GET("home/getPicByGym/{id}")
+    Call<List<gymImgResponse>> getPicByGym(@Path("id") int id);
 }

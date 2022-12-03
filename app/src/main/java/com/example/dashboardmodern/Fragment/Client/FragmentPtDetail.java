@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -29,7 +31,9 @@ import com.example.dashboardmodern.Activity.LoginActivity;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
+import com.example.dashboardmodern.Apdapter.photoAdapter;
 import com.example.dashboardmodern.R;
+import com.example.dashboardmodern.Utils.Photo;
 import com.example.lib.Model.Request.Comment;
 import com.example.lib.Model.Request.Trainer;
 import com.example.lib.Model.Request.addGymComment;
@@ -45,10 +49,12 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.relex.circleindicator.CircleIndicator3;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,8 +127,6 @@ public class FragmentPtDetail extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pt_detail, container, false);
 
-        ImageView gymPic = view.findViewById(R.id.gymPic);
-        Picasso.get().load(trainer.getAvatar()).into(gymPic);
 
         TextView gymName = view.findViewById(R.id.gymName);
         gymName.setText(trainer.getGym().getName());
@@ -135,6 +139,7 @@ public class FragmentPtDetail extends Fragment {
 
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
         ratingBar.setRating(trainer.getRate());
+
 
         LinearLayout book = view.findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {
@@ -221,14 +226,21 @@ public class FragmentPtDetail extends Fragment {
             }
         });
 
-        RecyclerView rcv_img_detail_pt = view.findViewById(R.id.rcv_img_detail_pt);
-        Call<List<ptImgResponse>> getImg = home.getByPt(trainer.getId());
+
+        ViewPager2 imgList = view.findViewById(R.id.imgList);
+        CircleIndicator3 mCircleIndicator = view.findViewById(R.id.indicator);
+
+        Call<List<ptImgResponse>> getImg = home.getPicByPt(trainer.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
             public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-                rcv_img_detail_pt.setLayoutManager(gridLayoutManager);
-                rcv_img_detail_pt.setAdapter(new UserImgAdapter(response.body()));
+                List<Photo> photos = new ArrayList<>();
+                for (ptImgResponse img : response.body()) {
+                    photos.add(new Photo(img.getImg()));
+                }
+                photoAdapter photoAdapter = new photoAdapter(photos);
+                imgList.setAdapter(photoAdapter);
+                mCircleIndicator.setViewPager(imgList);
             }
 
             @Override

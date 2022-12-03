@@ -1,6 +1,5 @@
 package com.example.lib.Model.Response;
 
-import com.example.lib.Model.Request.Gym;
 import com.example.lib.Model.Request.combo;
 
 import lombok.Data;

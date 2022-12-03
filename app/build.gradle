@@ -49,4 +49,5 @@ dependencies {
     //implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation group: 'cz.msebera.android' , name: 'httpclient', version: '4.5.3'
     implementation 'com.github.momo-wallet:mobile-sdk:1.0.7'
+    implementation 'me.relex:circleindicator:2.1.6'
 }

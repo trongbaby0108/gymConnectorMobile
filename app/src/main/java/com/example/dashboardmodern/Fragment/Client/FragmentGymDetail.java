@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -20,26 +19,30 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dashboardmodern.Activity.LoginActivity;
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.ComboAdapter;
 import com.example.dashboardmodern.Apdapter.CommentApdapter;
 import com.example.dashboardmodern.Apdapter.PTAdapter;
+import com.example.dashboardmodern.Apdapter.photoAdapter;
 import com.example.dashboardmodern.R;
+import com.example.dashboardmodern.Utils.Photo;
 import com.example.lib.Model.Request.Comment;
-import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Model.Request.Trainer;
 import com.example.lib.Model.Request.addGymComment;
-import com.example.lib.Model.Request.addPtComment;
 import com.example.lib.Model.Request.combo;
+import com.example.lib.Model.Response.gymImgResponse;
 import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator3;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,16 +56,16 @@ public class FragmentGymDetail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Gym gym ;
+    private Gym gym ;
 
-    Client client;
-    Home home;
-    TextView name, address, phone ;
-    ImageView img;
-    RecyclerView rcvCombo,rcv_pt,rcv_Comment;
-    RatingBar rate ;
-    Button btn_open_dialog_center;
-
+    private Client client;
+    private Home home;
+    private TextView name, address, phone ;
+    private RecyclerView rcvCombo,rcv_pt,rcv_Comment;
+    private  RatingBar rate ;
+    private Button btn_open_dialog_center;
+    private ViewPager2 mViewPager ;
+    private CircleIndicator3 mCircleIndicator;
 
     public FragmentGymDetail() {
     }
@@ -98,21 +101,23 @@ public class FragmentGymDetail extends Fragment {
         name = view.findViewById(R.id.gymName);
         address = view.findViewById(R.id.gymAddress);
         phone = view.findViewById(R.id.gymPhone);
-        img = view.findViewById(R.id.gymPic);
         rate = view.findViewById(R.id.ratingBar);
         rcv_Comment = view.findViewById(R.id.rcv_Comment);
         btn_open_dialog_center = view.findViewById(R.id.btn_open_dialog_center);
+        mViewPager = view.findViewById(R.id.imgList);
+        mCircleIndicator = view.findViewById(R.id.indicator);
 
         name.setText("Tên: "+ gym.getName());
         address.setText("Địa chỉ: "+ gym.getAddress());
         phone.setText("Sdt: "+ gym.getPhone());
-        Picasso.get().load(gym.getAvatar()).into(img);
         rate.setRating(gym.getRate());
 
         rcvCombo = view.findViewById(R.id.rcv_combo);
         rcv_pt = view.findViewById(R.id.rcv_pt);
+
         client = RetrofitClient.getRetrofit().create(Client.class);
         home = RetrofitClient.getRetrofit().create(Home.class);
+
         Call<List<combo>> getCombo = home.getComboByGym(gym.getId());
         getCombo.enqueue(new Callback<List<combo>>() {
             @Override
@@ -160,6 +165,27 @@ public class FragmentGymDetail extends Fragment {
 
             }
         });
+
+        Call<List<gymImgResponse>> getPicByGym = home.getPicByGym(gym.getId());
+        getPicByGym.enqueue(new Callback<List<gymImgResponse>>() {
+            @Override
+            public void onResponse(Call<List<gymImgResponse>> call, Response<List<gymImgResponse>> response) {
+                List<Photo> photos = new ArrayList<>();
+                photos.add(new Photo(gym.getAvatar()));
+                for (gymImgResponse img: response.body()) {
+                    photos.add(new Photo(img.getImg()));
+                }
+                photoAdapter photoAdapter = new photoAdapter(photos);
+                mViewPager.setAdapter(photoAdapter);
+                mCircleIndicator.setViewPager(mViewPager);
+            }
+
+            @Override
+            public void onFailure(Call<List<gymImgResponse>> call, Throwable t) {
+
+            }
+        });
+
 
         btn_open_dialog_center.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,27 +19,16 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.dashboardmodern.Apdapter.ComboAdapter;
-import com.example.dashboardmodern.Apdapter.GymHomeApdapter;
-import com.example.dashboardmodern.Fragment.Admin.FragmentComboDetailAdmin;
-import com.example.dashboardmodern.Fragment.Admin.FragmentGymDetailAdmin;
-import com.example.dashboardmodern.Fragment.Client.FragmentComboDetail;
-import com.example.dashboardmodern.Fragment.Client.FragmentGymDetail;
 import com.example.dashboardmodern.R;
 import com.example.dashboardmodern.Utils.RealPathUtil;
-import com.example.lib.Model.Request.Gym;
-import com.example.lib.Model.Request.combo;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Model.Request.ptSignIn;
-import com.example.lib.Repository.Admin;
 import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;

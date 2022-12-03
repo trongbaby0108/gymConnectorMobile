@@ -1,4 +1,4 @@
-package com.example.lib.Model.Request;
+package com.example.lib.Model.Response;
 
 import lombok.Data;
 import lombok.ToString;

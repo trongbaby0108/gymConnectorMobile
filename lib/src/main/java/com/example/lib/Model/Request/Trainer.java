@@ -1,5 +1,7 @@
 package com.example.lib.Model.Request;
 
+import com.example.lib.Model.Response.Gym;
+
 import lombok.Data;
 
 @Data

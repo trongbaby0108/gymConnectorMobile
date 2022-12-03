@@ -16,8 +16,7 @@ import com.example.dashboardmodern.Apdapter.GymApdapter;
 
 import com.example.dashboardmodern.Fragment.Admin.FragmentGymDetailAdmin;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Request.Gym;
-import com.example.lib.Repository.Admin;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 

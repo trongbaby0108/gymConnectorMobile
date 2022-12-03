@@ -15,9 +15,8 @@ import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
-import com.example.lib.Model.Request.Gym;
+import com.example.lib.Model.Response.Gym;
 import com.example.lib.Repository.Admin;
-import com.example.lib.Repository.Client;
 import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 
