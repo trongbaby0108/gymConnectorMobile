@@ -133,8 +133,7 @@ public class FragmentComboDetail extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Boolean> call, Throwable t) {
-                                        ShowMessage(t.getMessage());
-                                        System.out.println(t.getMessage());
+
                                     }
                                 });
                             }

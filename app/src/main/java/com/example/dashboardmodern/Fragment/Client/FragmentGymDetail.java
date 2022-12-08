@@ -171,12 +171,14 @@ public class FragmentGymDetail extends Fragment {
             @Override
             public void onResponse(Call<List<gymImgResponse>> call, Response<List<gymImgResponse>> response) {
                 List<Photo> photos = new ArrayList<>();
-                for (gymImgResponse img: response.body()) {
-                    photos.add(new Photo(img.getImg()));
+                if(response.body() != null) {
+                    for (gymImgResponse img : response.body()) {
+                        photos.add(new Photo(img.getImg()));
+                    }
+                    photoAdapter photoAdapter = new photoAdapter(photos);
+                    mViewPager.setAdapter(photoAdapter);
+                    mCircleIndicator.setViewPager(mViewPager);
                 }
-                photoAdapter photoAdapter = new photoAdapter(photos);
-                mViewPager.setAdapter(photoAdapter);
-                mCircleIndicator.setViewPager(mViewPager);
             }
 
             @Override
