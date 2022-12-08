@@ -147,7 +147,6 @@ public class FragmentPtDetail extends Fragment {
             public void onClick(View view) {
                 Client client = RetrofitClient.getRetrofit().create(Client.class);
                 if(mainActivity.acc != null){
-                    //bug
                     Call<billPTResponse> checkPTExit = client.checkPTExit("Bearer "+mainActivity.jwt,mainActivity.acc.getId());
                     checkPTExit.enqueue(new Callback<billPTResponse>() {
                         @Override
@@ -164,8 +163,6 @@ public class FragmentPtDetail extends Fragment {
 
                                     @Override
                                     public void onFailure(Call<Boolean> call, Throwable t) {
-                                        ShowMessage(t.getMessage());
-                                        System.out.println(t.getMessage());
                                     }
                                 });
                             }
