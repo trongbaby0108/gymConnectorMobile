@@ -171,7 +171,6 @@ public class FragmentGymDetail extends Fragment {
             @Override
             public void onResponse(Call<List<gymImgResponse>> call, Response<List<gymImgResponse>> response) {
                 List<Photo> photos = new ArrayList<>();
-                photos.add(new Photo(gym.getAvatar()));
                 for (gymImgResponse img: response.body()) {
                     photos.add(new Photo(img.getImg()));
                 }

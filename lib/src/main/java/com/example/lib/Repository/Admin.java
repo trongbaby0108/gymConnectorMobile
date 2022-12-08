@@ -77,12 +77,7 @@ public interface Admin {
     );
 
 
-    @Multipart
-    @POST("picPT/save")
-    Call<String> newImgPT(
-            @Part("id") RequestBody id,
-            @Part MultipartBody.Part pic
-    );
+
 
     @GET("personal_trainerAdmin/enablePT")
     Call<String> getALlPT(

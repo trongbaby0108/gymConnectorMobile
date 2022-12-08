@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
                         });
                     } else {
-                        Call<Boolean> checkout = client.checkout(jwt,acc.getId(),combo.getGym().getId(),combo.getId());
+                        Call<Boolean> checkout = client.checkout(jwt,acc.getId(),combo.getId());
                         checkout.enqueue(new Callback<Boolean>() {
                             @Override
                             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -244,21 +244,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if(token != null && !token.equals("")) {
 
                     } else {
-                        ShowMessage("Không thành công");
+//                        ShowMessage("Không thành công");
                     }
                 } else if(data.getIntExtra("status", -1) == 1) {
                     String message = data.getStringExtra("message") != null?data.getStringExtra("message"):"Thất bại";
                     ShowMessage("message: " + message);
                 } else if(data.getIntExtra("status", -1) == 2) {
-                    ShowMessage("Không thành công");
+//                    ShowMessage("Không thành công");
                 } else {
-                    ShowMessage("Không thành công");
+//                    ShowMessage("Không thành công");
                 }
             } else {
-                ShowMessage("Không thành công");
+    //            ShowMessage("Không thành công");
             }
         } else {
-            ShowMessage("Không thành công");
+     //       ShowMessage("Không thành công");
         }
     }
 

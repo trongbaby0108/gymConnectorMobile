@@ -4,6 +4,7 @@ import com.example.lib.Model.Request.addGymComment;
 import com.example.lib.Model.Request.addPtComment;
 import com.example.lib.Model.Request.loginRequest;
 import com.example.lib.Model.Request.ptSignIn;
+import com.example.lib.Model.Request.updatePt;
 import com.example.lib.Model.Request.updateUser;
 import com.example.lib.Model.Request.userSignIn;
 import com.example.lib.Model.Response.PTInfoResponse;
@@ -91,11 +92,10 @@ public interface Client {
             @Body addGymComment addGymComment);
 
 
-    @GET("client/billGym/checkout")
+    @POST("client/billGym/checkout")
     Call<Boolean> checkout(
             @Header("Authorization") String auth,
             @Query("idUser") int idUser,
-                           @Query("idGym") int idGym,
                            @Query("idCombo") int idCombo);
 
     @GET("client/billGym/checkGymExit/{id}")
@@ -104,7 +104,7 @@ public interface Client {
             @Path("id") int id);
 
 
-    @GET("client/billPt/checkout")
+    @POST("client/billPt/checkout")
     Call<Boolean> checkoutPT(
             @Header("Authorization") String auth,
             @Query("idUser") int idUser,
@@ -120,19 +120,22 @@ public interface Client {
             @Header("Authorization") String auth,
             @Body updateUser updateUser);
 
-    @GET("/client/personalTrainer/update")
+    @POST("/client/personalTrainer/update")
     Call<PTInfoResponse> updatePT(
             @Header("Authorization") String auth,
-            @Query("id") int id,
-            @Query("name") String name,
-            @Query("phone") String phone,
-            @Query("email") String email,
-            @Query("address") String address,
-            @Query("price") int price
+            @Body updatePt updatePt
     );
 
     @POST("client/personalTrainer/getUserByPT")
     Call<List<userInfoResponse>> getUserByPT(
             @Header("Authorization") String auth,
             @Query("idPT") int idPT);
+
+    @Multipart
+    @POST("/client/personalTrainer/addMoreImg")
+    Call<String> newImgPT(
+            @Header("Authorization") String auth,
+            @Part("id") RequestBody id,
+            @Part MultipartBody.Part pic
+    );
 }

@@ -3,6 +3,7 @@ package com.example.dashboardmodern.Fragment.Client;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -19,10 +21,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.R;
 import com.example.dashboardmodern.Utils.RealPathUtil;
 import com.example.lib.Model.Response.PTInfoResponse;
-import com.example.lib.Repository.Admin;
+import com.example.lib.Repository.Client;
 import com.example.lib.RetrofitClient;
 
 import java.io.File;
@@ -99,17 +102,27 @@ public class FragmentPtNewImg extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Admin methods = RetrofitClient.getRetrofit().create(Admin.class);
+                Client client = RetrofitClient.getRetrofit().create(Client.class);
                 String strRealPath = RealPathUtil.getRealPath(getContext(),imageUri);
                 File file = new File(strRealPath);
                 RequestBody rqAvt =  RequestBody.create(MediaType.parse("multipart/form-data"),file);
                 MultipartBody.Part mutipartBodyAvt = MultipartBody.Part.createFormData("pic" , file.getName(),rqAvt);
                 RequestBody rqID= RequestBody.create(MediaType.parse("multipart/form-data"),String.valueOf(ptInfoResponse.getId()));
-                Call<String> newImgPT = methods.newImgPT(rqID,mutipartBodyAvt);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                Call<String> newImgPT = client.newImgPT("Bearer "+mainActivity.jwt, rqID,mutipartBodyAvt);
                 newImgPT.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        ShowMessage("upload xong");
+                        if(response.code() == 200)
+                            ShowMessage("upload xong", new FragmentPtInfo.OnNoteListener() {
+                                @Override
+                                public void onNoteClick() {
+                                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(R.id.fragmentContainerView, new FragmentPtInfo(ptInfoResponse));
+                                    fragmentTransaction.addToBackStack("Fragment home");
+                                    fragmentTransaction.commit();
+                                }
+                            });
                     }
 
                     @Override
@@ -155,13 +168,20 @@ public class FragmentPtNewImg extends Fragment {
 
     }
 
-    public void ShowMessage(String text){
+    public void ShowMessage(String text , FragmentPtInfo.OnNoteListener mListener){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Cám ơn bạn");
         builder.setTitle(text);
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mListener.onNoteClick();
+            }
+        });
         builder.setCancelable(true);
         builder.create().show();
     }
-
+    public interface OnNoteListener{
+        void onNoteClick();
+    }
 }

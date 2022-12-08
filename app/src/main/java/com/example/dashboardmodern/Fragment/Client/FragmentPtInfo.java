@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,10 @@ import android.widget.TextView;
 
 import com.example.dashboardmodern.Activity.MainActivity;
 import com.example.dashboardmodern.Apdapter.UserImgAdapter;
+import com.example.dashboardmodern.Apdapter.photoAdapter;
 import com.example.dashboardmodern.R;
+import com.example.dashboardmodern.Utils.Photo;
+import com.example.lib.Model.Request.updatePt;
 import com.example.lib.Model.Response.PTInfoResponse;
 import com.example.lib.Model.Response.ptImgResponse;
 import com.example.lib.Repository.Admin;
@@ -27,8 +31,10 @@ import com.example.lib.Repository.Home;
 import com.example.lib.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator3;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,7 +91,7 @@ public class FragmentPtInfo extends Fragment {
         Home methods = RetrofitClient.getRetrofit().create(Home.class);
         MainActivity mainActivity = (MainActivity) getActivity();
         ImageView profile_image = view.findViewById(R.id.profile_image);
-        if(!ptInfoResponse.getAvatar().equals(""))
+        if(ptInfoResponse != null)
         Picasso.get().load(ptInfoResponse.getAvatar()).into(profile_image);
 
         TextView txtName = view.findViewById(R.id.txtName);
@@ -114,7 +120,7 @@ public class FragmentPtInfo extends Fragment {
             }
         });
 
-        Client admin = RetrofitClient.getRetrofit().create(Client.class);
+        Client client = RetrofitClient.getRetrofit().create(Client.class);
 
         Button btn_update = view.findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
@@ -123,14 +129,16 @@ public class FragmentPtInfo extends Fragment {
                 int cost= 0;
                 try {
                     cost = Integer.parseInt(txtCost.getText().toString());
-                    Call<PTInfoResponse> updatePT = admin.updatePT(
-                            mainActivity.jwt,
-                            ptInfoResponse.getId(),
+                    updatePt updatePt = new updatePt(ptInfoResponse.getId(),
                             txtName.getText().toString(),
                             txtPhone.getText().toString(),
                             txtEmail.getText().toString(),
                             txtAddress.getText().toString(),
-                            cost
+                            cost);
+                    System.out.println(updatePt.toString());
+                    Call<PTInfoResponse> updatePT = client.updatePT(
+                            "Bearer "+mainActivity.jwt,
+                            updatePt
                     );
                     updatePT.enqueue(new Callback<PTInfoResponse>() {
                         @Override
@@ -163,19 +171,23 @@ public class FragmentPtInfo extends Fragment {
                         }
                     });
                 }
-
-
             }
         });
 
-        RecyclerView rcv_img = view.findViewById(R.id.rcv_img);
-        Call<List<ptImgResponse>> getImg = methods.getPicByPt(ptInfoResponse.getId());
+        ViewPager2 imgList = view.findViewById(R.id.imgList);
+        CircleIndicator3 mCircleIndicator = view.findViewById(R.id.indicator);
+        Home home = RetrofitClient.getRetrofit().create(Home.class);
+        Call<List<ptImgResponse>> getImg = home.getPicByPt(ptInfoResponse.getId());
         getImg.enqueue(new Callback<List<ptImgResponse>>() {
             @Override
             public void onResponse(Call<List<ptImgResponse>> call, Response<List<ptImgResponse>> response) {
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-                rcv_img.setLayoutManager(gridLayoutManager);
-                rcv_img.setAdapter(new UserImgAdapter(response.body()));
+                List<Photo> photos = new ArrayList<>();
+                for (ptImgResponse img : response.body()) {
+                    photos.add(new Photo(img.getImg()));
+                }
+                photoAdapter photoAdapter = new photoAdapter(photos);
+                imgList.setAdapter(photoAdapter);
+                mCircleIndicator.setViewPager(imgList);
             }
 
             @Override

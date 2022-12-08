@@ -124,7 +124,7 @@ public class FragmentComboDetail extends Fragment {
                                 ShowMessage("Bạn đã có phòng gym rồi mà........");
                             }
                             else {
-                                Call<Boolean> checkout = client.checkout("Bearer "+mainActivity.jwt,mainActivity.acc.getId(),combo.getGym().getId(),combo.getId());
+                                Call<Boolean> checkout = client.checkout("Bearer "+mainActivity.jwt,mainActivity.acc.getId(),combo.getId());
                                 checkout.enqueue(new Callback<Boolean>() {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
